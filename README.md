@@ -14,7 +14,7 @@ Plugins Claude Code et Codex fournis aux clients AUGMENTÉS. Les skills travaill
 ## Installation avec Claude Code
 
 ```bash
-claude plugin marketplace add https://github.com/marmitesai/augmentes-plugins
+claude plugin marketplace add marmitesai/augmentes-plugins --scope project
 claude plugin install augmentes-foundation@augmentes --scope project
 ```
 
