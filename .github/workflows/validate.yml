@@ -24,6 +24,7 @@ jobs:
       - run: python -m pip install -r requirements-dev.txt
       - run: python scripts/generate_catalog.py --check
       - run: python scripts/validate_repository.py
+      - run: python -m unittest discover -s tests -p 'test_*.py'
       - name: Scan secrets
         env:
           GITLEAKS_VERSION: 8.30.1

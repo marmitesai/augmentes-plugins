@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "augmentes-foundation",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "source": "./plugins/augmentes-foundation",
       "description": "Initialise, organise, partage et clôture le travail dans le second cerveau AUGMENTÉS.",
       "author": {
@@ -23,7 +23,7 @@
     },
     {
       "name": "augmentes-routines",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "source": "./plugins/augmentes-routines",
       "description": "Guide les revues quotidiennes et hebdomadaires ainsi que les changements de phase de vie.",
       "author": {
@@ -37,7 +37,7 @@
     },
     {
       "name": "augmentes-knowledge",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "source": "./plugins/augmentes-knowledge",
       "description": "Importe, recherche, reformule et transforme les sources en connaissance exploitable.",
       "author": {
@@ -51,7 +51,7 @@
     },
     {
       "name": "augmentes-automation",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "source": "./plugins/augmentes-automation",
       "description": "Cartographie les processus et construit les connexions, skills et automatisations associées.",
       "author": {
@@ -65,7 +65,7 @@
     },
     {
       "name": "augmentes-meetings",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "source": "./plugins/augmentes-meetings",
       "description": "Transforme les enregistrements Plaud en notes corrigées, comptes rendus et brouillons d'actions.",
       "author": {
@@ -79,7 +79,7 @@
     },
     {
       "name": "augmentes-pilotage",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "source": "./plugins/augmentes-pilotage",
       "description": "Transforme une période de mails entrants et sortants en mémoire durable et rapport de décisions.",
       "author": {
