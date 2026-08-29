@@ -1,0 +1,15 @@
+{
+ "titre":"Le Point, jeu de test","h1":"Jeu de test","periode":"5 → 13 juillet 2026","run":"test",
+ "chapo":"Données fictives.","stats":[{"n":"8","l":"reçus"},{"n":"2","l":"envoyés"}],
+ "sections":[
+  {"id":"decisions","nav":"Décisions","titre":"Décisions en attente","lede":"Un arbitrage.",
+   "cartes":[{"id":"d1","titre":"Renouveler le contrat","tag":"avant le 30/07","niveau":"now",
+     "corps":["Échéance annoncée le <strong>5 juillet</strong>."],
+     "why":"<b>Pourquoi :</b> sans réponse, tacite reconduction.",
+     "options":["Renouveler","Renégocier"],"src":"Source : mail du 05/07"},
+    {"id":"d2","titre":"Chiffrer la refonte","tag":"cette semaine","niveau":"soon",
+     "corps":["Devis envoyé, sans retour."]}]},
+  {"id":"range","nav":"Ce que j'ai rangé","titre":"Ce que j'ai rangé",
+   "rows":[{"etat":"créé","quoi":"Note de test","detail":"Exemple"}]}],
+ "foot":"Jeu de test"
+}

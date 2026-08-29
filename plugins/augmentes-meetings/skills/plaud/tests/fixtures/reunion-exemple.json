@@ -1,0 +1,61 @@
+{
+  "reunions": [
+    {
+      "plaud_id": "fixture-0001",
+      "titre": "Point hebdo fournisseurs",
+      "date": "20/07/2026",
+      "heure": "09:30",
+      "duree": "28 min",
+      "type": "interne",
+      "corrected": false,
+      "doutes": [
+        "Le montant « 3 200 € » n'est pas net dans l'audio, à confirmer avec le fournisseur."
+      ],
+      "locuteurs": [
+        { "label": "Speaker 1", "propose": "Alex MARTIN" },
+        { "label": "Speaker 2", "propose": "Sam DURAND" }
+      ],
+      "participants": [
+        { "nom": "Alex MARTIN", "email": "alex.martin@boulangerie-papillon.fr" },
+        { "nom": "Sam DURAND", "email": "sam.durand@boulangerie-papillon.fr" }
+      ],
+      "blocs": [
+        {
+          "id": "b1",
+          "type": "contexte",
+          "titre": "Contexte",
+          "texte": "La farine bio commandée la semaine dernière n'est toujours pas arrivée. Le fournisseur habituel a annoncé un retard de 3 200 € de commandes en attente sur toute sa tournée."
+        },
+        {
+          "id": "b2",
+          "type": "décision",
+          "titre": "Décision fournisseur",
+          "texte": "On garde le fournisseur actuel pour ce mois-ci mais on ouvre un second compte chez un fournisseur de secours, à activer si le retard dépasse une semaine."
+        },
+        {
+          "id": "b3",
+          "type": "suivi",
+          "titre": "Suivi vitrine",
+          "texte": "Les prix de la vitrine n'ont pas été mis à jour depuis mars. Sam s'en occupe cette semaine."
+        }
+      ],
+      "actions": [
+        { "id": "a1", "texte": "Relancer le fournisseur de farine bio sur le retard", "owner": "Alex MARTIN" },
+        { "id": "a2", "texte": "Mettre à jour les prix affichés en vitrine", "owner": "Sam DURAND" }
+      ],
+      "verbatims": [
+        {
+          "t": "04:12",
+          "speaker": "Alex MARTIN",
+          "texte": "On ne peut pas se permettre une rupture de farine en pleine saison, il faut un plan B cette semaine."
+        }
+      ],
+      "diffusion": [
+        { "nom": "Alex MARTIN", "email": "alex.martin@boulangerie-papillon.fr", "role": "a" },
+        { "nom": "Sam DURAND", "email": "", "role": "cc" }
+      ],
+      "surligne": [],
+      "cr": true
+    }
+  ]
+}

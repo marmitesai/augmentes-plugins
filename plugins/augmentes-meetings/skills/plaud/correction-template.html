@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!--
+  kit-plaud : page de correction. Deux placeholders :
+  /*__KIT_CONFIG__*/ (config.json du client) et /*__PLAUD_DATA__*/ (données du lot).
+
+  Schéma d'entrée (window.PLAUD_DATA) :
+    { "reunions": [ R1, R2, ... ] }            // un onglet par réunion
+    (un objet R seul est aussi accepté)
+  Chaque R = { plaud_id, titre, date, heure, duree, type, doutes[], locuteurs[],
+               participants[], blocs[], actions[], diffusion[], cr,
+               raw_path?, surligne[], corrected?: true|false,
+               verbatims?: [{t:"MM:SS", speaker, texte}] }   // citations détectées
+  R.corrected=true = corrections déjà appliquées au coffre : l'onglet s'affiche
+  en relecture (bandeau vert, contenu = version corrigée), on ne recorrige pas.
+
+  Retour : 💾 Exporter (JSON dans ~/Downloads) ou 📋 Copier (coller dans le chat).
+-->
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Correction de réunion</title>
+<style>
+:root{
+ --ink:#0F1455;--ink-soft:#3B4577;--ink-mute:#7A84AA;--rule:#E4E7F2;
+ --surface:#FFFFFF;--surface-alt:#F5F7FB;--surface-deep:#EDEFF7;
+ --accent:#001789;--turquoise:#32D7D7;--corail:#ed734a;--ocre:#e3990f;--vert:#bdde61;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--surface);color:var(--ink);font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-weight:400;line-height:1.55;padding:24px clamp(16px,3vw,56px) 130px;width:100%;margin:0}
+.brand{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px}
+.brand img{width:160px;height:auto}
+.brand .side{text-align:right;font-size:12px;color:var(--ink-mute)}
+.brand .side a{color:var(--accent);text-decoration:none;border-bottom:1px dashed var(--turquoise)}
+/* onglets */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:2px solid var(--rule);margin-bottom:16px;position:sticky;top:0;background:var(--surface);z-index:5;padding-top:4px}
+.tab{font-family:inherit;font-size:13px;font-weight:700;padding:8px 14px;border:1px solid var(--rule);border-bottom:none;border-radius:10px 10px 0 0;background:var(--surface-alt);color:var(--ink-soft);cursor:pointer;max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab .st{font-weight:400;font-size:11px;opacity:.8;margin-left:6px}
+.tab.done{border-color:var(--vert)}
+.pane{display:none}.pane.on{display:block}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:0 34px;align-items:start}
+.trio{display:grid;grid-template-columns:1.6fr 1.1fr .9fr;gap:0 34px;align-items:start}
+@media(max-width:1050px){.duo,.trio{grid-template-columns:1fr}}
+@media(min-width:1500px){.blocs{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}.bloc{margin-bottom:0}}
+.corrbar{background:#F2F8E2;border:1px solid var(--vert);border-radius:10px;padding:9px 14px;margin:8px 0 14px;font-size:13px;color:var(--ink-soft)}
+h1{font-weight:800;font-size:22px;line-height:1.15;margin-bottom:3px}
+h1 input{font-family:inherit;font-weight:800;font-size:22px;border:none;border-bottom:1px dashed var(--rule);width:100%;outline:none;color:var(--ink);background:transparent}
+h1 input:focus{border-bottom-color:var(--turquoise)}
+.meta{color:var(--ink-mute);font-size:13px;margin-bottom:6px}
+.badge{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:2px 9px;border-radius:99px;background:var(--surface-alt);border:1px solid var(--rule);color:var(--ink-soft)}
+.doutes{background:var(--surface-alt);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 14px;margin:12px 0;font-size:13px;color:var(--ink-soft)}
+.doutes b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;color:var(--accent)}
+.tools{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:8px 0 0;font-size:12.5px;color:var(--ink-soft)}
+.tools label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.tools input{accent-color:var(--accent)}
+.kbd{font-size:11px;color:var(--ink-mute)}
+.kbd b{display:inline-block;border:1px solid var(--rule);border-radius:4px;padding:0 5px;font-weight:700;background:var(--surface-alt);color:var(--ink-soft)}
+h2{font-weight:800;font-size:14px;letter-spacing:.02em;margin:26px 0 10px;display:flex;align-items:center;gap:10px}
+h2 .num{color:var(--turquoise);font-weight:800}
+h2::after{content:"";flex:1;height:1px;background:var(--rule)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-mute);padding:6px 8px;border-bottom:1px solid var(--rule);font-weight:700}
+td{padding:7px 8px;border-bottom:1px solid var(--rule);vertical-align:middle}
+input,select{font-family:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--rule);border-radius:8px;background:#fff;color:var(--ink);outline:none;width:100%}
+input:focus{border-color:var(--turquoise);box-shadow:0 0 0 2px rgba(50,215,215,.25)}
+button{font-family:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--rule);border-radius:8px;background:#fff;cursor:pointer;color:var(--ink)}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button.small{font-size:12px;padding:3px 9px}
+button.add{margin-top:8px;color:var(--ink-soft)}
+.bloc{border:1px solid var(--rule);border-radius:12px;padding:12px 15px;margin-bottom:10px;background:#fff;scroll-margin:110px}
+.bloc.cur{border-color:var(--accent);box-shadow:0 0 0 2px rgba(0,23,137,.12)}
+.bloc .bh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.bloc .bt{font-weight:700;font-size:14px}
+.bloc .btype{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--turquoise);font-weight:700}
+.bloc .btxt{font-size:14px;color:var(--ink);white-space:pre-wrap}
+.bloc .btxt[contenteditable="true"]{outline:2px solid var(--turquoise);border-radius:6px;padding:6px;background:#F4FDFD}
+.bloc.deleted{opacity:.45;background:var(--surface-alt)}
+.bloc.deleted .btxt{text-decoration:line-through}
+.bloc.edited{border-color:var(--ocre)}
+mark.risk{background:#FBEED0;color:inherit;border-radius:3px;padding:0 1px}
+mark.ren{background:#D9F7F7;color:inherit;border-radius:3px;padding:0 1px}
+mark.spkm{background:transparent;color:var(--spkc);border-bottom:2px solid var(--spkc);border-radius:0;padding:0;font-weight:700}
+.spklegend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
+.spkchip{display:flex;align-items:center;gap:7px;border:1px solid var(--rule);border-radius:99px;padding:4px 12px;font-size:13px;cursor:pointer;background:#fff}
+.spkchip .pastille{width:12px;height:12px;border-radius:50%;flex:none}
+.spkchip:hover{border-color:var(--accent)}
+.vb{border:1px solid var(--rule);border-left:3px solid var(--turquoise);border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:8px;background:#fff;display:flex;gap:12px;align-items:flex-start}
+.vb .vq{flex:1;font-size:14px;font-style:italic;color:var(--ink)}
+.vb .vq[contenteditable]:focus{outline:2px solid var(--turquoise);border-radius:6px;background:#F4FDFD}
+.vb .vmeta{font-size:11px;color:var(--ink-mute);margin-top:4px;font-style:normal}
+.vb .ving{flex:none;font-size:12px;padding:5px 12px;border-radius:99px}
+.vb .ving.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.vb.ingest{border-left-color:var(--accent);background:var(--surface-alt)}
+.statut{display:flex;gap:4px;flex-wrap:wrap}
+.statut button{font-size:11px;padding:3px 9px;border-radius:99px}
+.statut button.on-garder{background:var(--ink);color:#fff;border-color:var(--ink)}
+.statut button.on-corrigee{background:var(--ocre);color:#fff;border-color:var(--ocre)}
+.statut button.on-cloturee{background:var(--vert);color:var(--ink);border-color:var(--vert)}
+.statut button.on-supprimer{background:var(--corail);color:#fff;border-color:var(--corail)}
+tr.a-supprimer td{opacity:.4;text-decoration:line-through}
+tr.a-cloturee .atxt{text-decoration:line-through;color:var(--ink-soft)}
+.atxt{min-width:200px}
+.atxt[contenteditable]{padding:4px;border-radius:6px}
+.atxt:focus{outline:2px solid var(--turquoise);background:#F4FDFD}
+.role{display:flex;gap:4px}
+.role button{font-size:11px;padding:3px 10px;border-radius:99px}
+.role button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.trio .choices{flex-direction:column;align-items:stretch}
+.choices label{display:flex;align-items:center;gap:6px;border:1px solid var(--rule);border-radius:10px;padding:8px 14px;cursor:pointer;font-size:14px}
+.choices label:has(input:checked){background:var(--accent);color:#fff;border-color:var(--accent)}
+.choices input{width:auto;accent-color:var(--turquoise)}
+.footer{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--rule);padding:10px clamp(14px,4vw,40px);display:flex;gap:10px;justify-content:flex-end;align-items:center;box-shadow:0 -8px 24px rgba(15,20,85,.06)}
+.footer .status{margin-right:auto;font-size:12.5px;color:var(--ink-soft);line-height:1.35}
+.footer .status b{color:var(--accent)}
+.footer .primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;padding:9px 18px}
+.footer .primary:hover{background:var(--ink);color:#fff}
+.powered{text-align:center;color:var(--ink-mute);font-size:11px;margin:24px 0 8px}
+</style>
+</head>
+<body>
+
+<div class="brand">
+  <div id="brandmark"></div>
+  <div class="side">Correction Plaud<br><span class="rawlink" id="rawlink"></span></div>
+</div>
+
+<div class="tabs" id="tabs"></div>
+<div id="panes"></div>
+
+<footer class="powered">page générée par le kit-plaud · powered by <strong>Marmites.ai</strong></footer>
+
+<div class="footer">
+  <span class="status" id="status">…</span>
+  <button onclick="doCopy()">📋 Copier</button>
+  <button class="primary" onclick="doExport()">💾 Exporter les corrections</button>
+</div>
+
+<datalist id="dlNames"></datalist>
+
+<script>
+window.KIT_CONFIG = /*__KIT_CONFIG__*/;
+const CFG = window.KIT_CONFIG || {};
+const BRAND = CFG.entreprise || {};
+const ACCENT = BRAND.couleur || "#1a1a2e";
+document.documentElement.style.setProperty("--accent", ACCENT);
+window.PLAUD_DATA = /*__PLAUD_DATA__*/;
+const EQUIPE = (CFG.equipe||[]).map(p=>p.nom);
+const LOT = window.PLAUD_DATA.reunions || [window.PLAUD_DATA];
+const $ = s => document.querySelector(s);
+const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const RISK=/(\d[\d\s.,]*\s?(?:€|k€|%)|\b\d{1,2}\/\d{1,2}(?:\/\d{2,4})?\b|\b\d{1,2}\s?h\s?\d{0,2}\b|\b(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)\b)/gi;
+const STATUTS=["garder","corrigée","clôturée","supprimer"];
+
+/* logo ou nom d'entreprise dans l'entête */
+$("#brandmark").innerHTML = BRAND.logo
+  ? `<img src="${esc(BRAND.logo)}" alt="${esc(BRAND.nom||"")}">`
+  : `<strong style="font-size:20px">${esc(BRAND.nom||"")}</strong>`;
+
+/* datalist global */
+const allNames=[...new Set([...EQUIPE, ...LOT.flatMap(R=>(R.participants||[]).map(p=>p.nom)), "Locuteur non identifié"])];
+$("#dlNames").innerHTML = allNames.map(n=>`<option value="${esc(n)}">`).join("");
+
+/* onglets */
+const tabsEl=$("#tabs"), panesEl=$("#panes");
+LOT.forEach((R,i)=>{
+  const b=document.createElement("button");
+  b.className="tab"+(R.corrected?" done":""); b.dataset.i=i;
+  b.innerHTML=`${esc(R.heure||"")} ${esc((R.titre||"").slice(0,26))}<span class="st">${R.corrected?"✔":""}</span>`;
+  b.onclick=()=>showTab(i);
+  tabsEl.appendChild(b);
+  panesEl.appendChild(buildPane(R,i));
+});
+function showTab(i){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",+t.dataset.i===i));
+  document.querySelectorAll(".pane").forEach(p=>p.classList.toggle("on",+p.dataset.i===i));
+  const R=LOT[i];
+  $("#rawlink").innerHTML = R.raw_path?`<a href="file://${esc(R.raw_path)}">voir le brut ↗</a>`:"";
+  update();
+}
+
+/* construction d'un onglet */
+function buildPane(R,i){
+  const pane=document.createElement("section");
+  pane.className="pane"; pane.dataset.i=i; pane.dataset.pid=R.plaud_id;
+  const corr = R.corrected ? `<div class="corrbar">✔ <b>Corrections déjà appliquées au coffre.</b> Cet onglet est en relecture : ne recorrige que si quelque chose cloche encore.</div>` : "";
+  pane.innerHTML=`
+  ${corr}
+  <h1><input class="titre" value="${esc(R.titre)}"></h1>
+  <p class="meta">${esc(R.date)} · ${esc(R.heure)} · ${esc(R.duree)} · <span class="badge">${esc(R.type)}</span> · <span style="font-family:monospace">${esc((R.plaud_id||"").slice(0,8))}</span></p>
+  ${(R.doutes||[]).length?`<div class="doutes"><b>Doutes ASR à vérifier</b>${R.doutes.map(esc).join("<br>")}</div>`:""}
+  <div class="tools">
+    <label><input type="checkbox" class="hl" checked> Surligner les points à risque</label>
+    <label><input type="checkbox" class="spkon" checked> Colorer par locuteur</label>
+    <span class="kbd"><b>J</b>/<b>K</b> naviguer · <b>E</b> éditer · <b>X</b> supprimer · <b>Échap</b> valider · double-clic = éditer</span>
+  </div>
+  <div class="duo"><div>
+  <h2><span class="num">1:</span>Interlocuteurs</h2>
+  <table class="tSpk"><thead><tr><th style="width:30%">Label Plaud</th><th>Personne réelle</th><th style="width:40px"></th></tr></thead><tbody>
+    ${(R.locuteurs||[]).map(l=>`<tr><td><code>${esc(l.label)}</code></td>
+      <td><input class="spk" data-label="${esc(l.label)}" data-last="${esc(l.propose||"")}" list="dlNames" value="${esc(l.propose||"")}"></td>
+      <td><button class="small" onclick="this.closest('tr').remove()">🗑</button></td></tr>`).join("")}
+  </tbody></table>
+  </div><div>
+  <h2><span class="num">2:</span>Participants</h2>
+  <table class="tPart"><thead><tr><th>Nom</th><th>Email</th><th style="width:40px"></th></tr></thead><tbody></tbody></table>
+  <button class="add" onclick="addPart(this.closest('.pane'))">+ ajouter un participant</button>
+  <div class="spklegend"></div>
+  </div></div>
+  <h2><span class="num">3:</span>Contenu du compte-rendu</h2>
+  <p class="meta">Tout est confirmé par défaut. ✏️ ou double-clic pour corriger, 🗑 pour retirer un bloc.</p>
+  <div class="blocs">
+    ${(R.blocs||[]).map(b=>`<div class="bloc" data-id="${esc(b.id)}">
+      <div class="bh"><div><span class="btype">${esc(b.type||"section")}</span><div class="bt">${esc(b.titre||"")}</div></div>
+      <div><button class="small" onclick="editBloc(this)">✏️ corriger</button>
+      <button class="small" onclick="delBloc(this)">🗑</button></div></div>
+      <div class="btxt">${esc(b.texte)}</div></div>`).join("")}
+  </div>
+  <button class="add" onclick="confirmAll(this.closest('.pane'))">✔ Tout confirmer</button>
+  <h2><span class="num">4:</span>Actions</h2>
+  <table class="tAct"><thead><tr><th>Action</th><th style="width:150px">Owner</th><th style="width:250px">Statut</th></tr></thead><tbody>
+    ${(R.actions||[]).map(a=>`<tr data-id="${esc(a.id)}" data-statut="garder">
+      <td><div class="atxt" contenteditable="true">${esc(a.texte)}</div></td>
+      <td><input class="aowner" list="dlNames" value="${esc(a.owner||"")}"></td>
+      <td><div class="statut">${STATUTS.map(s=>`<button onclick="setStatut(this,'${s}')">${s}</button>`).join("")}</div></td></tr>`).join("")}
+  </tbody></table>
+  <h2><span class="num">5:</span>Verbatims à retenir</h2>
+  <p class="meta">Citations détectées dans le transcript. 📥 pour les ingérer dans le coffre (qui, quand, où, quelle réunion). Texte éditable.</p>
+  <div class="verbatims">
+    ${(R.verbatims||[]).length?(R.verbatims||[]).map((v,vi)=>`<div class="vb" data-vi="${vi}">
+      <div class="vq" contenteditable="true">« ${esc(v.texte)} »<div class="vmeta" contenteditable="false">${esc(v.speaker||"?")} · ${esc(v.t||"")}</div></div>
+      <button class="ving" onclick="toggleIngest(this)">📥 ingérer</button></div>`).join(""):'<p class="meta">Aucun verbatim détecté.</p>'}
+  </div>
+  <div class="duo"><div>
+  <h2><span class="num">6:</span>Diffusion du CR</h2>
+  <p class="meta">À = destinataire · Cc = copie pour info · — = rien.</p>
+  <table class="tDiff"><thead><tr><th>Nom</th><th>Email</th><th style="width:170px">Rôle</th></tr></thead><tbody></tbody></table>
+  <button class="add" onclick="addDiff(this.closest('.pane'))">+ ajouter un destinataire</button>
+  </div><div>
+  <h2><span class="num">7:</span>Compte-rendu</h2>
+  <div class="choices crchoice">
+    <label><input type="radio" name="cr${i}" value="oui" ${R.cr!==false?"checked":""}>Oui, générer le CR en brouillon</label>
+    <label><input type="radio" name="cr${i}" value="non" ${R.cr===false?"checked":""}>Non, coffre uniquement</label>
+  </div>
+  </div></div>`;
+  const partB=pane.querySelector(".tPart tbody");
+  (R.participants||[]).forEach(p=>addPart(pane,p.nom,p.email));
+  (R.diffusion||[]).forEach(d=>addDiff(pane,d.nom,d.email||(CFG.equipe||[]).find(p=>p.nom===d.nom)?.email||"",d.role||"non"));
+  pane.querySelectorAll(".tAct tbody tr").forEach(tr=>{
+    tr.querySelector(".atxt").addEventListener("input",()=>{if(tr.dataset.statut==="garder")setStatut(tr.querySelectorAll(".statut button")[1],"corrigée")});
+    setStatut(tr.querySelectorAll(".statut button")[0],"garder");
+  });
+  pane.querySelector(".blocs").addEventListener("dblclick",e=>{const d=e.target.closest(".bloc"); if(d) editBloc(d.querySelector("button"))});
+  pane.querySelector(".hl").addEventListener("change",e=>applyRisk(pane,R,e.target.checked));
+  pane.querySelector(".spkon").addEventListener("change",e=>applySpk(pane,e.target.checked));
+  pane.querySelector(".tPart").addEventListener("change",()=>applySpk(pane,pane.querySelector(".spkon").checked));
+  return pane;
+}
+function addPart(pane,nom="",email=""){
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td><input class="pnom" list="dlNames" value="${esc(nom)}"></td>
+  <td><input class="pmail" type="email" value="${esc(email)}" placeholder="email"></td>
+  <td><button class="small" onclick="this.closest('tr').remove()">🗑</button></td>`;
+  pane.querySelector(".tPart tbody").appendChild(tr);
+}
+function addDiff(pane,nom="",email="",role="non"){
+  const tr=document.createElement("tr"); tr.dataset.role=role;
+  tr.innerHTML=`<td><input class="dnom" list="dlNames" value="${esc(nom)}"></td>
+  <td><input class="dmail" type="email" value="${esc(email)}" placeholder="email ⚠ requis pour À/Cc"></td>
+  <td><div class="role"><button onclick="setRole(this,'a')">À</button><button onclick="setRole(this,'cc')">Cc</button><button onclick="setRole(this,'non')">—</button></div></td>`;
+  pane.querySelector(".tDiff tbody").appendChild(tr);
+  setRole(tr.querySelectorAll(".role button")[{a:0,cc:1,non:2}[role]],role);
+}
+function editBloc(btn){const d=btn.closest(".bloc"),t=d.querySelector(".btxt");
+  t.contentEditable = t.contentEditable!=="true"; if(t.contentEditable==="true"){t.focus();d.classList.add("edited")} update()}
+function delBloc(btn){btn.closest(".bloc").classList.toggle("deleted"); update()}
+function confirmAll(pane){pane.querySelectorAll(".btxt").forEach(t=>t.contentEditable=false); update()}
+function setStatut(btn,s){
+  const tr=btn.closest("tr"); tr.dataset.statut=s;
+  tr.className = s==="supprimer"?"a-supprimer":(s==="clôturée"?"a-cloturee":"");
+  tr.querySelectorAll(".statut button").forEach(b=>b.className="");
+  btn.className={garder:"on-garder","corrigée":"on-corrigee","clôturée":"on-cloturee",supprimer:"on-supprimer"}[s];
+  update();
+}
+function setRole(btn,r){const tr=btn.closest("tr");tr.dataset.role=r;
+  tr.querySelectorAll(".role button").forEach(b=>b.classList.remove("on"));btn.classList.add("on"); update()}
+function toggleIngest(btn){const d=btn.closest(".vb");d.classList.toggle("ingest");btn.classList.toggle("on");update()}
+
+/* renommage locuteur propagé (dans le pane courant) */
+document.addEventListener("change",e=>{
+  if(!e.target.classList.contains("spk")) return;
+  const pane=e.target.closest(".pane");
+  const prev=e.target.dataset.last, next=e.target.value.trim();
+  if(prev && next && prev!==next){
+    pane.querySelectorAll(".btxt,.atxt").forEach(el=>{
+      if(el.textContent.includes(prev))
+        el.innerHTML = el.innerHTML.split(esc(prev)).join(`<mark class="ren">${esc(next)}</mark>`);
+    });
+  }
+  e.target.dataset.last=next; update();
+});
+
+/* couleurs par locuteur */
+const SPK_PALETTE=["#001789","#B3261E","#2E7D6B","#8C4A00","#6B4E8C","#00639B","#5C6B1F","#A83E68"];
+function nameVariants(full){
+  const parts=full.trim().split(/\s+/).filter(w=>w.length>2);
+  const v=[full.trim(),...parts];
+  return [...new Set(v)].sort((a,b)=>b.length-a.length);
+}
+function applySpk(pane,on){
+  // nettoyer
+  pane.querySelectorAll("mark.spkm").forEach(m=>m.replaceWith(document.createTextNode(m.textContent)));
+  pane.querySelectorAll(".btxt,.atxt,.vb .vq").forEach(el=>el.normalize());
+  const legend=pane.querySelector(".spklegend"); if(legend) legend.innerHTML="";
+  if(!on) return;
+  const parts=[...pane.querySelectorAll(".tPart tbody tr")].map((tr,i)=>({nom:tr.querySelector(".pnom").value.trim(),c:SPK_PALETTE[i%SPK_PALETTE.length]})).filter(p=>p.nom);
+  if(legend) legend.innerHTML=parts.map(p=>`<span class="spkchip" title="couleur de ${esc(p.nom)}"><span class="pastille" style="background:${p.c}"></span>${esc(p.nom)}</span>`).join("");
+  pane.querySelectorAll(".btxt,.atxt,.vb .vq").forEach(el=>{
+    if(el.contentEditable==="true") return;
+    let h=el.innerHTML;
+    parts.forEach(p=>{
+      nameVariants(p.nom).forEach(v=>{
+        h=h.split(`<mark class="spkm" style="--spkc:${p.c}">${esc(v)}</mark>`).join(esc(v)); // idempotence
+        h=h.replace(new RegExp(`(?<![\\wÀ-ÿ>])${v.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}(?![\\wÀ-ÿ])`,"g"),
+          `<mark class="spkm" style="--spkc:${p.c}">${v}</mark>`);
+      });
+    });
+    el.innerHTML=h;
+  });
+  // verbatims : bordure à la couleur du locuteur
+  pane.querySelectorAll(".vb").forEach(d=>{
+    const meta=d.querySelector(".vmeta"); if(!meta) return;
+    const who=meta.textContent.split("·")[0].trim();
+    const hit=parts.find(p=>who.includes(p.nom)||p.nom.includes(who.split(" ")[0]));
+    if(hit) d.style.borderLeftColor=hit.c;
+  });
+}
+/* surlignage à risque */
+function applyRisk(pane,R,on){
+  pane.querySelectorAll(".btxt").forEach(el=>{
+    if(el.contentEditable==="true") return;
+    el.querySelectorAll("mark.risk").forEach(m=>m.replaceWith(document.createTextNode(m.textContent)));
+    el.normalize();
+    if(on){
+      let h=el.innerHTML;
+      h=h.replace(RISK,'<mark class="risk">$1</mark>');
+      (R.surligne||[]).forEach(t=>{ if(t&&t.length>2) h=h.split(esc(t)).join(`<mark class="risk">${esc(t)}</mark>`);});
+      el.innerHTML=h;
+    }
+  });
+}
+
+/* clavier (pane actif) */
+let cur=-1;
+function activePane(){return document.querySelector(".pane.on")}
+document.addEventListener("keydown",e=>{
+  const typing=e.target.matches("input,select")||e.target.isContentEditable;
+  if(e.key==="Escape"){document.querySelectorAll('.btxt[contenteditable="true"]').forEach(t=>t.contentEditable=false);e.target.blur&&e.target.blur();
+    const p=activePane(); if(p){const R=LOT[+p.dataset.i]; applyRisk(p,R,p.querySelector(".hl").checked);} update(); return;}
+  if(typing) return;
+  const k=e.key.toLowerCase(), p=activePane(); if(!p) return;
+  const bl=[...p.querySelectorAll(".bloc")];
+  if(k==="j"||k==="k"){
+    cur=Math.max(0,Math.min(bl.length-1,cur+(k==="j"?1:-1)));
+    bl.forEach(b=>b.classList.remove("cur")); bl[cur]?.classList.add("cur");
+    bl[cur]?.scrollIntoView({behavior:"smooth",block:"center"});
+  } else if(k==="e"&&bl[cur]) editBloc(bl[cur].querySelector("button"));
+  else if(k==="x"&&bl[cur]){bl[cur].classList.toggle("deleted");update();}
+});
+
+/* récap live (pane actif) */
+function update(){
+  if(!window.__ready) return;
+  const p=activePane(); if(!p) return;
+  const i=+p.dataset.i;
+  const bl=[...p.querySelectorAll(".bloc")];
+  const del=bl.filter(b=>b.classList.contains("deleted")).length;
+  const ed=bl.filter(b=>b.classList.contains("edited")&&!b.classList.contains("deleted")).length;
+  const ac={garder:0,"corrigée":0,"clôturée":0,supprimer:0};
+  p.querySelectorAll(".tAct tbody tr").forEach(tr=>ac[tr.dataset.statut]++);
+  const dTo=[...p.querySelectorAll(".tDiff tbody tr")].filter(t=>t.dataset.role==="a").length;
+  const dCc=[...p.querySelectorAll(".tDiff tbody tr")].filter(t=>t.dataset.role==="cc").length;
+  const cr=p.querySelector(`input[name="cr${i}"]:checked`)?.value==="oui";
+  const nvb=p.querySelectorAll(".vb.ingest").length;
+  $("#status").innerHTML=`Onglet ${i+1}/${LOT.length} · <b>${bl.length-del} blocs</b> (${ed} corrigés, ${del} retirés) · <b>${ac["garder"]+ac["corrigée"]} actions</b> (${ac["clôturée"]} clôturées, ${ac["supprimer"]} suppr.) · <b>📥 ${nvb} verbatims</b> · <b>À:${dTo} Cc:${dCc}</b> · CR ${cr?"<b>oui</b>":"<b>non</b>"}`;
+}
+document.addEventListener("input",()=>update());
+document.addEventListener("change",e=>{ if(/^cr\d+$/.test(e.target.name||"")) update(); });
+
+/* export */
+function collectPane(p){
+  const i=+p.dataset.i;
+  const locuteurs={}; p.querySelectorAll("input.spk").forEach(inp=>{if(inp.dataset&&inp.dataset.label!==undefined)locuteurs[inp.dataset.label]=(inp.value||"").trim()});
+  return {
+    plaud_id:p.dataset.pid, titre:p.querySelector(".titre").value.trim(), type:LOT[i].type,
+    corrected_avant:!!LOT[i].corrected, locuteurs,
+    participants:[...p.querySelectorAll(".tPart tbody tr")].map(tr=>({nom:tr.querySelector(".pnom").value.trim(),email:tr.querySelector(".pmail").value.trim()})).filter(x=>x.nom),
+    blocs:[...p.querySelectorAll(".bloc")].map(d=>({id:d.dataset.id,titre:d.querySelector(".bt").textContent,texte:d.querySelector(".btxt").innerText.trim(),deleted:d.classList.contains("deleted")})),
+    actions:[...p.querySelectorAll(".tAct tbody tr")].map(tr=>({id:tr.dataset.id,texte:tr.querySelector(".atxt").innerText.trim(),owner:tr.querySelector(".aowner").value.trim(),statut:tr.dataset.statut})),
+    diffusion:[...p.querySelectorAll(".tDiff tbody tr")].map(tr=>({nom:tr.querySelector(".dnom").value.trim(),email:tr.querySelector(".dmail").value.trim(),role:tr.dataset.role})).filter(x=>x.nom),
+    verbatims:[...p.querySelectorAll(".vb")].map(d=>{const vi=+d.dataset.vi,src=(LOT[i].verbatims||[])[vi]||{};
+      const q=d.querySelector(".vq").cloneNode(true); q.querySelector(".vmeta")?.remove();
+      return {t:src.t||"",speaker:src.speaker||"",texte:q.innerText.trim().replace(/^«\s*/,"").replace(/\s*»$/,""),ingest:d.classList.contains("ingest")}}),
+    cr:p.querySelector(`input[name="cr${i}"]:checked`)?.value==="oui"};
+}
+function collectAll(){ return {reunions:[...document.querySelectorAll(".pane")].map(collectPane)} }
+function doExport(){
+  const data=collectAll();
+  const j=JSON.stringify(data,null,1);
+  const name = data.reunions.length===1 ? `plaud-corrections-${data.reunions[0].plaud_id}.json` : `plaud-corrections-lot-${(LOT[0].date||"").replaceAll("-","")}.json`;
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([j],{type:"application/json"})); a.download=name; a.click();
+  $("#status").innerHTML=`Exporté → <b>~/Downloads/${name}</b>. Dites « corrigé » à votre assistant.`;
+}
+function doCopy(){
+  navigator.clipboard.writeText(JSON.stringify(collectAll(),null,1))
+    .then(()=>$("#status").innerHTML="<b>JSON copié</b>. Collez-le dans le chat de votre assistant.");
+}
+window.__ready=true;
+LOT.forEach((R,i)=>{const p=document.querySelector(`.pane[data-i="${i}"]`);applyRisk(p,R,true);applySpk(p,true);});
+showTab(0);
+</script>
+</body>
+</html>

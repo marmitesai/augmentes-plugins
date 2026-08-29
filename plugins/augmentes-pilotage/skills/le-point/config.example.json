@@ -1,0 +1,34 @@
+{
+  "_lisez_moi": "Copiez ce fichier en config.json et remplissez-le. Rien ici n'est envoyé nulle part : tout reste sur votre machine.",
+
+  "ma_boite": "prenom@exemple.fr",
+  "mon_domaine": "exemple.fr",
+
+  "_coffre": "Chemin vers votre coffre (le vault). Laissez vide pour que l'IA le demande au lancement.",
+  "coffre": "",
+
+  "_domaines_proches": "Les domaines dont les mails comptent toujours, même quand l'expéditeur est une boîte générique du type contact@ ou info@ : vos clients, votre comptable, votre avocat, vos partenaires.",
+  "domaines_proches": [
+    "monclient.fr",
+    "mon-expert-comptable.fr"
+  ],
+
+  "_robots_internes": "Les adresses de votre propre organisation qui n'écrivent jamais à la main : supervision, tickets, notifications, sauvegardes.",
+  "robots_internes": [
+    "notifications@exemple.fr",
+    "noreply@exemple.fr"
+  ],
+
+  "_sujets_automatiques": "Fragments de sujet qui trahissent un automatisme partant d'une vraie boîte d'équipe. Insensible à la casse, testé en début de sujet.",
+  "sujets_automatiques": [
+    "[TICKET]",
+    "Confirmation de votre commande",
+    "Accepté :",
+    "Refusé :",
+    "Annulé :",
+    "Réponse automatique"
+  ],
+
+  "_seuil_jours": "Nombre de jours sans réponse avant qu'un fil soit signalé comme en attente.",
+  "seuil_jours": 2
+}

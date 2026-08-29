@@ -1,0 +1,31 @@
+{
+  "name": "augmentes-foundation",
+  "version": "1.0.0-rc.1",
+  "description": "Initialise, organise, partage et clôture le travail dans le second cerveau AUGMENTÉS.",
+  "author": {
+    "name": "Marmites SAS",
+    "url": "https://augmentes.fr"
+  },
+  "homepage": "https://github.com/marmitesai/augmentes-plugins",
+  "repository": "https://github.com/marmitesai/augmentes-plugins",
+  "license": "Licence propriétaire AUGMENTÉS 1.0",
+  "keywords": [
+    "augmentes",
+    "vault",
+    "organisation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AUGMENTÉS Foundation",
+    "shortDescription": "Fondations du second cerveau",
+    "longDescription": "Initialise, organise, partage et clôture le travail dans le second cerveau AUGMENTÉS.",
+    "developerName": "Marmites SAS",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills"
+    ],
+    "defaultPrompt": [],
+    "privacyPolicyURL": "https://github.com/marmitesai/augmentes-plugins/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/marmitesai/augmentes-plugins/blob/main/LICENSE.md"
+  }
+}

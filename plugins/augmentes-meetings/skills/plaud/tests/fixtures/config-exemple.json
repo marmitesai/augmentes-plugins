@@ -1,0 +1,15 @@
+{
+  "compte_plaud": "alex.martin@boulangerie-papillon.fr",
+  "equipe": [
+    { "nom": "Alex MARTIN", "email": "alex.martin@boulangerie-papillon.fr" },
+    { "nom": "Sam DURAND", "email": "sam.durand@boulangerie-papillon.fr" },
+    { "nom": "Jordan PETIT", "email": "jordan.petit@boulangerie-papillon.fr" }
+  ],
+  "coffre": "",
+  "messagerie": "m365",
+  "entreprise": {
+    "nom": "Boulangerie Papillon",
+    "logo": "logo-exemple.png",
+    "couleur": "#7A3E9D"
+  }
+}

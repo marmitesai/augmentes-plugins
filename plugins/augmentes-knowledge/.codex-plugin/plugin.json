@@ -1,0 +1,31 @@
+{
+  "name": "augmentes-knowledge",
+  "version": "1.0.0-rc.1",
+  "description": "Importe, recherche, reformule et transforme les sources en connaissance exploitable.",
+  "author": {
+    "name": "Marmites SAS",
+    "url": "https://augmentes.fr"
+  },
+  "homepage": "https://github.com/marmitesai/augmentes-plugins",
+  "repository": "https://github.com/marmitesai/augmentes-plugins",
+  "license": "Licence propriétaire AUGMENTÉS 1.0",
+  "keywords": [
+    "augmentes",
+    "knowledge",
+    "research"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AUGMENTÉS Knowledge",
+    "shortDescription": "Recherche et connaissance durable",
+    "longDescription": "Importe, recherche, reformule et transforme les sources en connaissance exploitable.",
+    "developerName": "Marmites SAS",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills"
+    ],
+    "defaultPrompt": [],
+    "privacyPolicyURL": "https://github.com/marmitesai/augmentes-plugins/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/marmitesai/augmentes-plugins/blob/main/LICENSE.md"
+  }
+}

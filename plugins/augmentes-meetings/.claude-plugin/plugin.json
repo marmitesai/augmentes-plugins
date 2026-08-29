@@ -1,0 +1,17 @@
+{
+  "name": "augmentes-meetings",
+  "version": "1.0.0-rc.1",
+  "description": "Transforme les enregistrements Plaud en notes corrigées, comptes rendus et brouillons d'actions.",
+  "author": {
+    "name": "Marmites SAS",
+    "url": "https://augmentes.fr"
+  },
+  "homepage": "https://github.com/marmitesai/augmentes-plugins",
+  "repository": "https://github.com/marmitesai/augmentes-plugins",
+  "license": "Licence propriétaire AUGMENTÉS 1.0",
+  "keywords": [
+    "augmentes",
+    "plaud",
+    "meetings"
+  ]
+}

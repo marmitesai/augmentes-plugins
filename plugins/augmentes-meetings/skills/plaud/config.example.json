@@ -1,0 +1,24 @@
+{
+  "_lisez_moi": "Copiez ce fichier en config.json et remplissez-le. Rien ici n'est envoyé nulle part : tout reste sur votre machine.",
+
+  "_compte_plaud": "L'adresse de votre compte Plaud (celle de l'application).",
+  "compte_plaud": "prenom@exemple.fr",
+
+  "_equipe": "Les personnes qui participent souvent à vos réunions. Elles préremplissent la liste des locuteurs et les destinataires des comptes-rendus.",
+  "equipe": [
+    { "nom": "Prénom NOM", "email": "prenom@exemple.fr" }
+  ],
+
+  "_coffre": "Chemin vers votre coffre (le vault du kit cerveau, ou un dossier à vous). Laissez vide pour que l'IA le demande au lancement.",
+  "coffre": "",
+
+  "_messagerie": "m365, gmail ou aucune. Avec 'aucune', le kit s'arrête au compte-rendu fichier : à vous de l'envoyer.",
+  "messagerie": "m365",
+
+  "_entreprise": "Votre identité visuelle sur la page de correction et les comptes-rendus. logo = chemin vers un fichier image, ou vide. couleur = un code hex, ou vide pour le défaut sobre.",
+  "entreprise": {
+    "nom": "Mon Entreprise",
+    "logo": "",
+    "couleur": ""
+  }
+}

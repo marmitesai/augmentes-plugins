@@ -1,0 +1,17 @@
+{
+  "name": "augmentes-pilotage",
+  "version": "1.0.0-rc.1",
+  "description": "Transforme une période de mails entrants et sortants en mémoire durable et rapport de décisions.",
+  "author": {
+    "name": "Marmites SAS",
+    "url": "https://augmentes.fr"
+  },
+  "homepage": "https://github.com/marmitesai/augmentes-plugins",
+  "repository": "https://github.com/marmitesai/augmentes-plugins",
+  "license": "Licence propriétaire AUGMENTÉS 1.0",
+  "keywords": [
+    "augmentes",
+    "email",
+    "decisions"
+  ]
+}

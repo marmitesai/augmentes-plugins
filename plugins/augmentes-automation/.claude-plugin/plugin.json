@@ -1,0 +1,17 @@
+{
+  "name": "augmentes-automation",
+  "version": "1.0.0-rc.1",
+  "description": "Cartographie les processus et construit les connexions, skills et automatisations associées.",
+  "author": {
+    "name": "Marmites SAS",
+    "url": "https://augmentes.fr"
+  },
+  "homepage": "https://github.com/marmitesai/augmentes-plugins",
+  "repository": "https://github.com/marmitesai/augmentes-plugins",
+  "license": "Licence propriétaire AUGMENTÉS 1.0",
+  "keywords": [
+    "augmentes",
+    "automation",
+    "skills"
+  ]
+}

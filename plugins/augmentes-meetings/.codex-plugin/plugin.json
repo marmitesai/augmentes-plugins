@@ -1,0 +1,31 @@
+{
+  "name": "augmentes-meetings",
+  "version": "1.0.0-rc.1",
+  "description": "Transforme les enregistrements Plaud en notes corrigées, comptes rendus et brouillons d'actions.",
+  "author": {
+    "name": "Marmites SAS",
+    "url": "https://augmentes.fr"
+  },
+  "homepage": "https://github.com/marmitesai/augmentes-plugins",
+  "repository": "https://github.com/marmitesai/augmentes-plugins",
+  "license": "Licence propriétaire AUGMENTÉS 1.0",
+  "keywords": [
+    "augmentes",
+    "plaud",
+    "meetings"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AUGMENTÉS Meetings",
+    "shortDescription": "Réunions Plaud vers notes et actions",
+    "longDescription": "Transforme les enregistrements Plaud en notes corrigées, comptes rendus et brouillons d'actions.",
+    "developerName": "Marmites SAS",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills"
+    ],
+    "defaultPrompt": [],
+    "privacyPolicyURL": "https://github.com/marmitesai/augmentes-plugins/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/marmitesai/augmentes-plugins/blob/main/LICENSE.md"
+  }
+}

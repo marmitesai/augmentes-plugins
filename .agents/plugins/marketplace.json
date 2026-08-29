@@ -1,0 +1,80 @@
+{
+  "name": "augmentes",
+  "interface": {
+    "displayName": "AUGMENTÉS"
+  },
+  "plugins": [
+    {
+      "name": "augmentes-foundation",
+      "source": {
+        "source": "local",
+        "path": "./plugins/augmentes-foundation"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "augmentes-routines",
+      "source": {
+        "source": "local",
+        "path": "./plugins/augmentes-routines"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "augmentes-knowledge",
+      "source": {
+        "source": "local",
+        "path": "./plugins/augmentes-knowledge"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "augmentes-automation",
+      "source": {
+        "source": "local",
+        "path": "./plugins/augmentes-automation"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "augmentes-meetings",
+      "source": {
+        "source": "local",
+        "path": "./plugins/augmentes-meetings"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "augmentes-pilotage",
+      "source": {
+        "source": "local",
+        "path": "./plugins/augmentes-pilotage"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Business"
+    }
+  ]
+}

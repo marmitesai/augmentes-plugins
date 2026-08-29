@@ -1,0 +1,31 @@
+{
+  "name": "augmentes-routines",
+  "version": "1.0.0-rc.1",
+  "description": "Guide les revues quotidiennes et hebdomadaires ainsi que les changements de phase de vie.",
+  "author": {
+    "name": "Marmites SAS",
+    "url": "https://augmentes.fr"
+  },
+  "homepage": "https://github.com/marmitesai/augmentes-plugins",
+  "repository": "https://github.com/marmitesai/augmentes-plugins",
+  "license": "Licence propriétaire AUGMENTÉS 1.0",
+  "keywords": [
+    "augmentes",
+    "review",
+    "routines"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AUGMENTÉS Routines",
+    "shortDescription": "Revues et transitions personnelles",
+    "longDescription": "Guide les revues quotidiennes et hebdomadaires ainsi que les changements de phase de vie.",
+    "developerName": "Marmites SAS",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills"
+    ],
+    "defaultPrompt": [],
+    "privacyPolicyURL": "https://github.com/marmitesai/augmentes-plugins/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/marmitesai/augmentes-plugins/blob/main/LICENSE.md"
+  }
+}
