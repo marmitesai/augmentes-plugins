@@ -9,6 +9,10 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+SEMVER = re.compile(r"^\d+\.\d+\.\d+(?:-rc\.\d+)?$")
+VALID_SCOPES = {"user", "project"}
+VALID_CHANNELS = {"pilot", "stable"}
+VALID_CLASSIFICATIONS = {"personal", "internal", "restricted", "public"}
 SECRET_PATTERNS = {
     "clé privée": re.compile(r"BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY"),
     "jeton connu": re.compile(
@@ -51,6 +55,23 @@ def frontmatter(path: Path, errors: list[str]) -> dict:
 def validate() -> list[str]:
     errors: list[str] = []
     catalog = yaml.safe_load((ROOT / "catalog.yaml").read_text())
+    for filename in ("CHANGELOG.md", "GOVERNANCE.md"):
+        if not (ROOT / filename).is_file():
+            fail(errors, f"{filename} absent")
+    distribution = catalog.get("distribution", {})
+    if not isinstance(distribution.get("audience"), str) or not distribution["audience"].strip():
+        fail(errors, "catalog.yaml : audience absente")
+    if distribution.get("default_scope") not in VALID_SCOPES:
+        fail(errors, "catalog.yaml : default_scope doit valoir user ou project")
+    channel = distribution.get("release_channel")
+    if channel not in VALID_CHANNELS:
+        fail(errors, "catalog.yaml : release_channel doit valoir pilot ou stable")
+    if distribution.get("data_classification") not in VALID_CLASSIFICATIONS:
+        fail(errors, "catalog.yaml : data_classification invalide")
+    if distribution.get("secrets") != "forbidden":
+        fail(errors, "catalog.yaml : secrets doit valoir forbidden")
+    if distribution.get("runtime_data") != "local-only":
+        fail(errors, "catalog.yaml : runtime_data doit valoir local-only")
     plugins = catalog.get("plugins", [])
     plugin_names = [plugin.get("name") for plugin in plugins]
     if len(plugin_names) != len(set(plugin_names)):
@@ -58,6 +79,13 @@ def validate() -> list[str]:
     declared_skills: set[str] = set()
     for plugin in plugins:
         plugin_name = plugin.get("name", "")
+        version = plugin.get("version", "")
+        if not SEMVER.fullmatch(version):
+            fail(errors, f"{plugin_name} : version SemVer invalide ({version})")
+        elif channel == "pilot" and "-rc." not in version:
+            fail(errors, f"{plugin_name} : le canal pilot exige une version -rc.N")
+        elif channel == "stable" and "-rc." in version:
+            fail(errors, f"{plugin_name} : le canal stable refuse une version de test")
         if not NAME.fullmatch(plugin_name):
             fail(errors, f"nom de plugin invalide : {plugin_name}")
             continue

@@ -11,6 +11,13 @@ repository: https://github.com/marmitesai/augmentes-plugins
 license: Licence propriétaire AUGMENTÉS 1.0
 privacy_policy_url: https://github.com/marmitesai/augmentes-plugins/blob/main/PRIVACY.md
 terms_url: https://github.com/marmitesai/augmentes-plugins/blob/main/LICENSE.md
+distribution:
+  audience: augmentes-clients
+  default_scope: project
+  release_channel: pilot
+  data_classification: public
+  secrets: forbidden
+  runtime_data: local-only
 plugins:
   - name: augmentes-foundation
     version: 1.0.0-rc.1
