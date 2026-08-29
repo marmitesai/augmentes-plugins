@@ -29,6 +29,20 @@ SECRET_PATTERNS = {
         re.IGNORECASE,
     ),
 }
+SKILL_TOKEN = r"(?:m-[a-z0-9]+(?:-[a-z0-9]+)*|daily-brief|done-dev|point-dev|update-mes-sessions)"
+SKILL_REFERENCE = re.compile(
+    rf"(?:\[\[(?P<wiki>{SKILL_TOKEN})(?:[|#][^\]]*)?\]\]|"
+    rf"`(?P<code>{SKILL_TOKEN})`|(?<![\w-])[$/](?P<sigil>{SKILL_TOKEN})(?![a-z0-9*/-]))"
+)
+MCP_REFERENCE = re.compile(r"\bmcp__[A-Za-z0-9_-]+__[A-Za-z0-9_-]+\b")
+LOCAL_RESOURCE = re.compile(
+    r"\$(?:SK|SKILL|SKILL_DIR)/(?P<path>[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*\.(?:py|sh|js|mjs|html|json|yaml|yml))"
+)
+FORBIDDEN_REFERENCES = {
+    "atelier Dropbox obsolète": re.compile(r"(?:\$DEXTER|_DEXTER)/Devs(?:/|\b)"),
+    "ancien dossier Claude": re.compile(r"(?:~|\$HOME)/\.claude/(?:skills|scripts)/"),
+    "ancien outil Plaud": re.compile(r"\bmcp__plaud__plaud_get_recent\b"),
+}
 
 
 def fail(errors: list[str], message: str) -> None:
@@ -50,6 +64,58 @@ def frontmatter(path: Path, errors: list[str]) -> dict:
         fail(errors, f"{path.relative_to(ROOT)} : frontmatter non objet")
         return {}
     return data
+
+
+def declared_reference_set(catalog: dict, key: str, errors: list[str]) -> set[str]:
+    references = catalog.get("references", {})
+    values = references.get(key, []) if isinstance(references, dict) else []
+    if not isinstance(values, list) or any(not isinstance(value, str) for value in values):
+        fail(errors, f"catalog.yaml : references.{key} doit être une liste de chaînes")
+        return set()
+    if len(values) != len(set(values)):
+        fail(errors, f"catalog.yaml : references.{key} contient des doublons")
+    return set(values)
+
+
+def validate_references(
+    skill_files: list[Path], declared_skills: set[str], catalog: dict, errors: list[str], root: Path = ROOT
+) -> None:
+    external_skills = declared_reference_set(catalog, "skills", errors)
+    allowed_mcp_tools = declared_reference_set(catalog, "mcp_tools", errors)
+    collisions = external_skills & declared_skills
+    if collisions:
+        fail(errors, f"catalog.yaml : skills externes aussi locaux {sorted(collisions)}")
+    used_external_skills: set[str] = set()
+    used_mcp_tools: set[str] = set()
+    for skill_file in skill_files:
+        content = skill_file.read_text()
+        relative = skill_file.relative_to(root)
+        for label, pattern in FORBIDDEN_REFERENCES.items():
+            if pattern.search(content):
+                fail(errors, f"{relative} : {label} détecté")
+        referenced_skills = {
+            next(value for value in match.groups() if value)
+            for match in SKILL_REFERENCE.finditer(content)
+        }
+        unknown_skills = referenced_skills - declared_skills - external_skills
+        if unknown_skills:
+            fail(errors, f"{relative} : skills référencés inconnus {sorted(unknown_skills)}")
+        used_external_skills.update(referenced_skills & external_skills)
+        referenced_mcp_tools = set(MCP_REFERENCE.findall(content))
+        unknown_mcp_tools = referenced_mcp_tools - allowed_mcp_tools
+        if unknown_mcp_tools:
+            fail(errors, f"{relative} : outils MCP non déclarés {sorted(unknown_mcp_tools)}")
+        used_mcp_tools.update(referenced_mcp_tools)
+        for match in LOCAL_RESOURCE.finditer(content):
+            resource = skill_file.parent / match.group("path")
+            if not resource.is_file():
+                fail(errors, f"{relative} : ressource locale absente {match.group('path')}")
+    unused_skills = external_skills - used_external_skills
+    if unused_skills:
+        fail(errors, f"catalog.yaml : skills externes non référencés {sorted(unused_skills)}")
+    unused_mcp_tools = allowed_mcp_tools - used_mcp_tools
+    if unused_mcp_tools:
+        fail(errors, f"catalog.yaml : outils MCP non référencés {sorted(unused_mcp_tools)}")
 
 
 def validate() -> list[str]:
@@ -77,6 +143,7 @@ def validate() -> list[str]:
     if len(plugin_names) != len(set(plugin_names)):
         fail(errors, "catalog.yaml : noms de plugins dupliqués")
     declared_skills: set[str] = set()
+    skill_files: list[Path] = []
     for plugin in plugins:
         plugin_name = plugin.get("name", "")
         version = plugin.get("version", "")
@@ -99,6 +166,7 @@ def validate() -> list[str]:
             if not skill_file.exists():
                 fail(errors, f"{skill_file.relative_to(ROOT)} absent")
                 continue
+            skill_files.append(skill_file)
             data = frontmatter(skill_file, errors)
             if data.get("name") != skill_name:
                 fail(errors, f"{skill_file.relative_to(ROOT)} : name différent du dossier")
@@ -111,6 +179,7 @@ def validate() -> list[str]:
         for manifest in (".claude-plugin/plugin.json", ".codex-plugin/plugin.json"):
             if not (plugin_root / manifest).exists():
                 fail(errors, f"{plugin_name}/{manifest} absent")
+    validate_references(skill_files, declared_skills, catalog, errors)
     if catalog.get("public"):
         for path in (ROOT / "plugins").rglob("*"):
             if not path.is_file() or ".git" in path.parts:
