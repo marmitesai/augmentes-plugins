@@ -1,22 +1,22 @@
 {
   "_lisez_moi": "Copiez ce fichier en config.json et remplissez-le. Rien ici n'est envoyé nulle part : tout reste sur votre machine.",
 
-  "ma_boite": "prenom@exemple.fr",
-  "mon_domaine": "exemple.fr",
+  "ma_boite": "prenom@example.com",
+  "mon_domaine": "example.com",
 
   "_coffre": "Chemin vers votre coffre (le vault). Laissez vide pour que l'IA le demande au lancement.",
   "coffre": "",
 
   "_domaines_proches": "Les domaines dont les mails comptent toujours, même quand l'expéditeur est une boîte générique du type contact@ ou info@ : vos clients, votre comptable, votre avocat, vos partenaires.",
   "domaines_proches": [
-    "monclient.fr",
-    "mon-expert-comptable.fr"
+    "client.example",
+    "expert-comptable.example"
   ],
 
   "_robots_internes": "Les adresses de votre propre organisation qui n'écrivent jamais à la main : supervision, tickets, notifications, sauvegardes.",
   "robots_internes": [
-    "notifications@exemple.fr",
-    "noreply@exemple.fr"
+    "notifications@example.com",
+    "noreply@example.com"
   ],
 
   "_sujets_automatiques": "Fragments de sujet qui trahissent un automatisme partant d'une vraie boîte d'équipe. Insensible à la casse, testé en début de sujet.",

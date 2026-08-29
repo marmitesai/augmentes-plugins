@@ -44,10 +44,10 @@ Les deux scripts ne parlent qu'à ce format. Peu importe d'où viennent les mail
   "id": "identifiant du message",
   "fil": "identifiant de la conversation (conversationId, threadId)",
   "sujet": "l'objet du mail",
-  "expediteur": "qui.ecrit@exemple.fr",
+  "expediteur": "qui.ecrit@example.com",
   "nom": "Qui Écrit",
-  "a": ["destinataire@exemple.fr"],
-  "copie": ["copie@exemple.fr"],
+  "a": ["destinataire@example.com"],
+  "copie": ["copie@example.com"],
   "date": "2026-07-18T09:14:00Z",
   "extrait": "les premières lignes du corps"
 }]

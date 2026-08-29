@@ -16,8 +16,8 @@
         { "label": "Speaker 2", "propose": "Sam DURAND" }
       ],
       "participants": [
-        { "nom": "Alex MARTIN", "email": "alex.martin@boulangerie-papillon.fr" },
-        { "nom": "Sam DURAND", "email": "sam.durand@boulangerie-papillon.fr" }
+        { "nom": "Alex MARTIN", "email": "alex.martin@boulangerie-papillon.example" },
+        { "nom": "Sam DURAND", "email": "sam.durand@boulangerie-papillon.example" }
       ],
       "blocs": [
         {
@@ -51,7 +51,7 @@
         }
       ],
       "diffusion": [
-        { "nom": "Alex MARTIN", "email": "alex.martin@boulangerie-papillon.fr", "role": "a" },
+        { "nom": "Alex MARTIN", "email": "alex.martin@boulangerie-papillon.example", "role": "a" },
         { "nom": "Sam DURAND", "email": "", "role": "cc" }
       ],
       "surligne": [],

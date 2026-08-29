@@ -80,7 +80,7 @@ cp config.example.json config.json
 
 Remplis `config.json` **avec le client**, champ par champ : son adresse Plaud, les personnes qui participent souvent à ses réunions (nom et email, jamais devinés), le chemin de son coffre s'il en a un, sa messagerie (`m365`, `gmail` ou `aucune`), et son identité visuelle (nom d'entreprise, logo, couleur) si elle est déjà arrêtée. Un champ que le client ne sait pas encore remplir reste vide, il se complète plus tard.
 
-Vérification : `config.json` se lit comme du JSON valide, sans les valeurs d'exemple du modèle (`prenom@exemple.fr`, `Mon Entreprise`) restées telles quelles là où le client avait une vraie réponse à donner.
+Vérification : `config.json` se lit comme du JSON valide, sans les valeurs d'exemple du modèle (`prenom@example.com`, `Mon Entreprise`) restées telles quelles là où le client avait une vraie réponse à donner.
 
 Si le client hésite sur un champ (équipe pas encore définie, coffre pas encore choisi) : laisse-le vide plutôt que d'inventer, et signale-le avant de passer à l'étape 7.
 

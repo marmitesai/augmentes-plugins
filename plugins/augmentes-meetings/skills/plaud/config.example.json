@@ -2,11 +2,11 @@
   "_lisez_moi": "Copiez ce fichier en config.json et remplissez-le. Rien ici n'est envoyé nulle part : tout reste sur votre machine.",
 
   "_compte_plaud": "L'adresse de votre compte Plaud (celle de l'application).",
-  "compte_plaud": "prenom@exemple.fr",
+  "compte_plaud": "prenom@example.com",
 
   "_equipe": "Les personnes qui participent souvent à vos réunions. Elles préremplissent la liste des locuteurs et les destinataires des comptes-rendus.",
   "equipe": [
-    { "nom": "Prénom NOM", "email": "prenom@exemple.fr" }
+    { "nom": "Prénom NOM", "email": "prenom@example.com" }
   ],
 
   "_coffre": "Chemin vers votre coffre (le vault du kit cerveau, ou un dossier à vous). Laissez vide pour que l'IA le demande au lancement.",

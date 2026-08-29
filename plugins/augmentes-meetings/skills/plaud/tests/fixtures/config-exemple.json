@@ -1,9 +1,9 @@
 {
-  "compte_plaud": "alex.martin@boulangerie-papillon.fr",
+  "compte_plaud": "alex.martin@boulangerie-papillon.example",
   "equipe": [
-    { "nom": "Alex MARTIN", "email": "alex.martin@boulangerie-papillon.fr" },
-    { "nom": "Sam DURAND", "email": "sam.durand@boulangerie-papillon.fr" },
-    { "nom": "Jordan PETIT", "email": "jordan.petit@boulangerie-papillon.fr" }
+    { "nom": "Alex MARTIN", "email": "alex.martin@boulangerie-papillon.example" },
+    { "nom": "Sam DURAND", "email": "sam.durand@boulangerie-papillon.example" },
+    { "nom": "Jordan PETIT", "email": "jordan.petit@boulangerie-papillon.example" }
   ],
   "coffre": "",
   "messagerie": "m365",
