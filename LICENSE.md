@@ -32,4 +32,4 @@ En cas de contradiction, les stipulations du contrat écrit conclu entre Marmite
 
 ## 8. Droit applicable
 
-La présente licence est soumise au droit français. Tout litige relève des juridictions compétentes d'Annecy, sous réserve des règles impératives applicables.
+La présente licence est soumise au droit français. Pour tout litige entre commerçants relatif à sa validité, son interprétation, son exécution ou sa cessation, compétence exclusive est attribuée au tribunal de commerce d'Annecy, y compris en cas de pluralité de défendeurs ou d'appel en garantie. Cette clause ne s'applique pas lorsqu'une règle impérative en dispose autrement, notamment à l'égard d'un consommateur.
