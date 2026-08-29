@@ -1,6 +1,6 @@
 {
   "name": "augmentes-automation",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "Cartographie les processus et construit les connexions, skills et automatisations associées.",
   "author": {
     "name": "Marmites SAS",

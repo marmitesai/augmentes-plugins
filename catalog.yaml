@@ -20,7 +20,7 @@ distribution:
   runtime_data: local-only
 plugins:
   - name: augmentes-foundation
-    version: 1.0.0-rc.1
+    version: 1.0.0-rc.2
     display_name: AUGMENTÉS Foundation
     short_description: Fondations du second cerveau
     description: Initialise, organise, partage et clôture le travail dans le second cerveau AUGMENTÉS.
@@ -28,7 +28,7 @@ plugins:
     keywords: [augmentes, vault, organisation]
     skills: [done, inbox-processor, initialisation, partager]
   - name: augmentes-routines
-    version: 1.0.0-rc.1
+    version: 1.0.0-rc.2
     display_name: AUGMENTÉS Routines
     short_description: Revues et transitions personnelles
     description: Guide les revues quotidiennes et hebdomadaires ainsi que les changements de phase de vie.
@@ -36,7 +36,7 @@ plugins:
     keywords: [augmentes, review, routines]
     skills: [daily-review, new-life-phase, weekly-review]
   - name: augmentes-knowledge
-    version: 1.0.0-rc.1
+    version: 1.0.0-rc.2
     display_name: AUGMENTÉS Knowledge
     short_description: Recherche et connaissance durable
     description: Importe, recherche, reformule et transforme les sources en connaissance exploitable.
@@ -44,7 +44,7 @@ plugins:
     keywords: [augmentes, knowledge, research]
     skills: [de-ai-ify, import, notes-permanentes, research-assistant, thinking-partner]
   - name: augmentes-automation
-    version: 1.0.0-rc.1
+    version: 1.0.0-rc.2
     display_name: AUGMENTÉS Automation
     short_description: Process, skills et automatisations
     description: Cartographie les processus et construit les connexions, skills et automatisations associées.
@@ -52,7 +52,7 @@ plugins:
     keywords: [augmentes, automation, skills]
     skills: [connect-mcp, create-skill, map-process, new-automation]
   - name: augmentes-meetings
-    version: 1.0.0-rc.1
+    version: 1.0.0-rc.2
     display_name: AUGMENTÉS Meetings
     short_description: Réunions Plaud vers notes et actions
     description: Transforme les enregistrements Plaud en notes corrigées, comptes rendus et brouillons d'actions.
@@ -60,7 +60,7 @@ plugins:
     keywords: [augmentes, plaud, meetings]
     skills: [plaud]
   - name: augmentes-pilotage
-    version: 1.0.0-rc.1
+    version: 1.0.0-rc.2
     display_name: AUGMENTÉS Pilotage
     short_description: Pilotage depuis les échanges email
     description: Transforme une période de mails entrants et sortants en mémoire durable et rapport de décisions.
