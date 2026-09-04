@@ -37,7 +37,7 @@
     },
     {
       "name": "augmentes-knowledge",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0-rc.3",
       "source": "./plugins/augmentes-knowledge",
       "description": "Importe, recherche, reformule et transforme les sources en connaissance exploitable.",
       "author": {

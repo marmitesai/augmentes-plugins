@@ -39,13 +39,13 @@ plugins:
     keywords: [augmentes, review, routines]
     skills: [daily-review, new-life-phase, weekly-review]
   - name: augmentes-knowledge
-    version: 1.0.0-rc.2
+    version: 1.0.0-rc.3
     display_name: AUGMENTÉS Knowledge
     short_description: Recherche et connaissance durable
     description: Importe, recherche, reformule et transforme les sources en connaissance exploitable.
     category: Productivity
     keywords: [augmentes, knowledge, research]
-    skills: [de-ai-ify, import, notes-permanentes, research-assistant, thinking-partner]
+    skills: [creer-son-ontologie, de-ai-ify, import, notes-permanentes, research-assistant, thinking-partner]
   - name: augmentes-automation
     version: 1.0.0-rc.2
     display_name: AUGMENTÉS Automation
