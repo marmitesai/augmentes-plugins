@@ -116,7 +116,18 @@ OK ?
 
 Dans le Cerveau Privé, tu appliques directement, sans validation.
 
-Si une **contradiction** est détectée : résous-la en faveur de ce qui a été dit pendant la session (l'info la plus récente gagne).
+Si une **contradiction** est détectée, **ne l'écrase pas en silence**, même en Cerveau Privé. Une note documentée a été écrite par quelqu'un qui avait un contexte ; une phrase dite en session n'est pas automatiquement plus vraie, elle est seulement plus récente. Montre l'écart et demande :
+
+```
+Contradiction dans [fichier] :
+
+- Documenté : [ancienne valeur]
+- Dit en session : [nouvelle valeur]
+
+J'écris la nouvelle ? (ou : garder l'ancienne / garder les deux avec leurs dates)
+```
+
+C'est la seule exception à « en Cerveau Privé, tu appliques directement ». Les ajouts et les mises à jour de progression ne demandent toujours rien : il y a rarement plus d'une contradiction par session.
 
 ### Étape 5 : Cocher les todos complétés
 
@@ -218,7 +229,8 @@ Extractions :
 ## Notes
 
 - Le log de session est **toujours** dans le Cerveau Privé, jamais ailleurs
-- NIVEAU 3 en Cerveau Privé : appliqué directement, pas de validation
+- NIVEAU 3 en Cerveau Privé : appliqué directement, pas de validation — **sauf une contradiction**, qui se montre et se demande (étape 4)
+- Ne jamais effacer une valeur documentée sans que la personne l'ait vue. Une contradiction est une information, pas une erreur à nettoyer
 - NIVEAU 3 en cerveau partagé : montrer avant d'écrire, l'audience change tout
 - NIVEAU 4 (Moi.md, intention) nécessite validation
 - Étape 7 (écritures partagées) est obligatoire dès qu'un fichier partagé a bougé
