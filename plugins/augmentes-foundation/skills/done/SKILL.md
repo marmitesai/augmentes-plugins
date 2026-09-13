@@ -131,7 +131,13 @@ C'est la seule exception à « en Cerveau Privé, tu appliques directement ». L
 
 ### Étape 5 : Cocher les todos complétés
 
-Cherche dans les notes de tous les cerveaux présents (weekly notes, notes de projet) les todos réalisés pendant cette session. Coche-les (`- [x]`). Les weekly notes sont toujours dans le Cerveau Privé, les todos de projet sont là où vit le projet.
+Cherche les todos réalisés pendant cette session dans **la weekly note active et les notes de contexte des projets touchés** — pas dans tous les cerveaux : un `- [ ]` qui ressemble à ce qu'on vient de faire n'est pas forcément le même. Les weekly notes sont toujours dans le Cerveau Privé, les todos de projet sont là où vit le projet.
+
+Ne coche que ce que la session a réellement fini. Un todo à moitié fait reste ouvert, et une tâche terminée par quelqu'un d'autre ne se coche pas ici.
+
+**Dans un cerveau partagé, cocher est une écriture partagée** : elle suit la règle de l'étape 7, on montre avant d'écrire.
+
+**Liste ce que tu as coché dans le log**, fichier par fichier. Cocher une case modifie une note sans laisser de trace ailleurs : si le log ne le dit pas, personne ne peut revenir dessus.
 
 ### Étape 6 : Mise à jour contexte personnel (NIVEAU 4, avec validation)
 

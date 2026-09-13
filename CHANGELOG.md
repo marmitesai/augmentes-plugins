@@ -1,5 +1,9 @@
 # Journal des versions
 
+## 1.0.0-rc.5 - 2026-09-13
+
+- `/done` ne coche plus des cases n'importe où. L'étape 5 disait de chercher les todos réalisés « dans les notes de tous les cerveaux présents » : une recherche sans borne, capable de cocher dans un cerveau partagé, sans montrer ce qu'elle avait modifié. Elle se limite désormais à la weekly note active et aux notes de contexte des projets touchés, ne coche que ce qui est réellement fini, suit la règle des écritures partagées quand la note l'est, et liste dans le log ce qu'elle a coché.
+
 ## 1.0.0-rc.4 - 2026-09-13
 
 - `/done` ne tranche plus une contradiction tout seul. Il résolvait l'écart entre une note documentée et ce qui venait d'être dit « en faveur de l'info la plus récente », appliqué directement en Cerveau Privé sans validation et sans garder l'ancienne valeur : une phrase de conversation effaçait un fait écrit, sans trace. Il montre maintenant l'écart et demande, avec trois issues. C'est la seule exception à l'écriture directe en Privé ; les ajouts et la progression ne demandent toujours rien.
