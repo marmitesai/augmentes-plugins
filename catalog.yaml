@@ -23,7 +23,7 @@ references:
   mcp_tools: [mcp__firecrawl-mcp__firecrawl_scrape, mcp__firecrawl-mcp__firecrawl_search]
 plugins:
   - name: augmentes-foundation
-    version: 1.0.0-rc.3
+    version: 1.0.0-rc.4
     display_name: AUGMENTÉS Foundation
     short_description: Fondations du second cerveau
     description: Initialise, organise, partage et clôture le travail dans le second cerveau AUGMENTÉS.
