@@ -42,3 +42,5 @@ Le dépôt ne contient aucun secret. Les accès aux services externes sont confi
 ## Maintenance
 
 `catalog.yaml` est la source des manifestes Claude Code et Codex. Toute contribution doit passer les validateurs du dépôt et le scan de secrets.
+
+Les recettes maison servies par learn (`kit-plaud`, `le-point`) se construisent ici, à un tag : `python3 scripts/build_learn_zip.py <slug> <tag> <version>` écrit `dist/<slug>-v<version>.zip` et affiche son empreinte SHA-256. `bash scripts/scrub-check.sh <dossier de la skill>` doit être vert avant.

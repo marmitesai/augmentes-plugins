@@ -1,5 +1,9 @@
 # Journal des versions
 
+## 1.0.0-rc.7 - 2026-09-27
+
+- Ce dépôt devient la seule source des recettes maison servies par learn (`kit-plaud`, `le-point`). `scripts/build_learn_zip.py` construit leurs ZIP depuis `augmentes-meetings/skills/plaud` et `augmentes-pilotage/skills/le-point`, lus au tag et non dans la copie de travail, sous le slug que les clients ont installé (racine de l'archive et `name:` du SKILL.md), avec noms en UTF-8 et NFC et des dates fixées : le même tag donne la même empreinte. `scripts/scrub-check.sh` reprend la garde anti-fuite de `skills-clients` et tolère la signature publique « M:armites.ai », que l'ancienne version prenait pour une fuite. Aucun contenu de plugin ne change : les six plugins gardent leur version.
+
 ## 1.0.0-rc.6 - 2026-09-27
 
 - `augmentes-pilotage` monte en 1.0.0-rc.3 : la fixture de test de `le-point` s'appelait `tests/config.json`, le nom exact que les Recettes du Garde Manger refusent dans un paquet distribuable (configuration privée). Le paquet était bloqué à l'import depuis le 08/09 et la collection n'a jamais été publiée. Elle devient `tests/fixtures/config-exemple.json`, comme dans `augmentes-meetings`.
