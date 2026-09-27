@@ -47,7 +47,7 @@ plugins:
     keywords: [augmentes, knowledge, research]
     skills: [de-ai-ify, import, notes-permanentes, research-assistant, thinking-partner]
   - name: augmentes-automation
-    version: 1.0.0-rc.2
+    version: 1.0.0-rc.3
     display_name: AUGMENTÉS Automation
     short_description: Process, skills et automatisations
     description: Cartographie les processus et construit les connexions, skills et automatisations associées.
@@ -63,7 +63,7 @@ plugins:
     keywords: [augmentes, plaud, meetings]
     skills: [plaud]
   - name: augmentes-pilotage
-    version: 1.0.0-rc.2
+    version: 1.0.0-rc.3
     display_name: AUGMENTÉS Pilotage
     short_description: Pilotage depuis les échanges email
     description: Transforme une période de mails entrants et sortants en mémoire durable et rapport de décisions.

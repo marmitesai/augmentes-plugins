@@ -51,7 +51,7 @@
     },
     {
       "name": "augmentes-automation",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0-rc.3",
       "source": "./plugins/augmentes-automation",
       "description": "Cartographie les processus et construit les connexions, skills et automatisations associées.",
       "author": {
@@ -79,7 +79,7 @@
     },
     {
       "name": "augmentes-pilotage",
-      "version": "1.0.0-rc.2",
+      "version": "1.0.0-rc.3",
       "source": "./plugins/augmentes-pilotage",
       "description": "Transforme une période de mails entrants et sortants en mémoire durable et rapport de décisions.",
       "author": {
