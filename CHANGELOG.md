@@ -1,5 +1,10 @@
 # Journal des versions
 
+## 1.0.0-rc.6 - 2026-09-27
+
+- `augmentes-pilotage` monte en 1.0.0-rc.3 : la fixture de test de `le-point` s'appelait `tests/config.json`, le nom exact que les Recettes du Garde Manger refusent dans un paquet distribuable (configuration privée). Le paquet était bloqué à l'import depuis le 08/09 et la collection n'a jamais été publiée. Elle devient `tests/fixtures/config-exemple.json`, comme dans `augmentes-meetings`.
+- `augmentes-automation` monte en 1.0.0-rc.3 : `connect-mcp` conseillait `type: "sse"` pour un serveur MCP distant dans Claude Desktop, forme qui ne marche pas. Le conseil donne maintenant la forme de chaque client : `claude mcp add --transport http` pour Claude Code, `mcp-remote --transport http-only` pour Claude Desktop, `type: "remote"` pour OpenCode. Reprise du correctif de la version Dexter du 26/09.
+
 ## 1.0.0-rc.5 - 2026-09-13
 
 - `/done` ne coche plus des cases n'importe où. L'étape 5 disait de chercher les todos réalisés « dans les notes de tous les cerveaux présents » : une recherche sans borne, capable de cocher dans un cerveau partagé, sans montrer ce qu'elle avait modifié. Elle se limite désormais à la weekly note active et aux notes de contexte des projets touchés, ne coche que ce qui est réellement fini, suit la règle des écritures partagées quand la note l'est, et liste dans le log ce qu'elle a coché.

@@ -402,7 +402,11 @@ Si une étape a échoué (fichier non trouvé, jq absent, erreur de parsing), in
 
 **MCP avec args supplémentaires** (ex: `--headless`, `--port 3000`) : les ajouter dans le tableau `args` apres le package, ex: `["npx", "-y", "@playwright/mcp", "--headless"]` pour OpenCode, ou dans `args` pour Claude Code/Desktop.
 
-**MCP remote (HTTP/SSE) dans Claude Code/Desktop :** utiliser `type: "sse"` et une clé `url` au lieu de `command`/`args`. Vérifier dans le README du MCP si ce mode est supporté.
+**MCP distant (HTTP) :** chaque client a sa forme, et `type: "sse"` n'est pas la bonne pour Claude Desktop.
+
+- Claude Code : `claude mcp add --transport http --scope user NOM https://…/mcp` (le fichier porte alors `"type": "http", "url": "…"`). Un serveur protégé par OAuth se connecte ensuite avec `/mcp` dans la session.
+- Claude Desktop : pas d'entrée `url` directe. Passer par `mcp-remote` : `"command": "npx", "args": ["-y", "mcp-remote", "https://…/mcp", "--transport", "http-only"]`. Un connecteur d'organisation claude.ai reste préférable quand il existe : Desktop l'hérite sans rien poser sur le poste.
+- OpenCode : `type: "remote"` avec `url`.
 
 **Si npx n'est pas disponible :** proposer d'installer Node.js (`brew install node` sur macOS, `apt install nodejs` sur Linux). Le MCP s'installera automatiquement via npx lors du premier lancement.
 

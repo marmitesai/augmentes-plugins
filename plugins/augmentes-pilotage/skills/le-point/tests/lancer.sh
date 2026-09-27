@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 TMP=$(mktemp -d)
 cp tests/inbox.json tests/sent.json "$TMP/"
-python3 scripts/triage.py --dir "$TMP" --config tests/config.json >/dev/null
+python3 scripts/triage.py --dir "$TMP" --config tests/fixtures/config-exemple.json >/dev/null
 python3 tests/verifier.py "$TMP"
 python3 scripts/rapport.py --input tests/constat.json --output "$TMP/rapport.html" >/dev/null
 python3 - "$TMP/rapport.html" <<'PY'
