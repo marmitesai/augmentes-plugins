@@ -1,5 +1,11 @@
 # Journal des versions
 
+## 1.0.0-rc.8 - 2026-10-21
+
+- Les 18 skills privilégient le Garde-Manger connecté, avec un répertoire local de secours et une reprise contrôlée. Les refus d’accès, conflits et résultats d’écriture incertains sont traités séparément des pannes.
+- `/done` distingue clôture distante et journal local en attente ; l’initialisation et le partage ne manipulent pas les espaces distants par commandes de fichiers. Plaud et le-point séparent scripts locaux et notes persistées.
+- Chaque paquet contient le contrat de stockage, généré depuis une seule source et vérifié avec les manifestes. Versions de tous les plugins incrémentées pour rendre le changement détectable à l’installation.
+
 ## 1.0.0-rc.7 - 2026-09-27
 
 - Ce dépôt devient la seule source des recettes maison servies par learn (`kit-plaud`, `le-point`). `scripts/build_learn_zip.py` construit leurs ZIP depuis `augmentes-meetings/skills/plaud` et `augmentes-pilotage/skills/le-point`, lus au tag et non dans la copie de travail, sous le slug que les clients ont installé (racine de l'archive et `name:` du SKILL.md), avec noms en UTF-8 et NFC et des dates fixées : le même tag donne la même empreinte. `scripts/scrub-check.sh` reprend la garde anti-fuite de `skills-clients` et tolère la signature publique « M:armites.ai », que l'ancienne version prenait pour une fuite. Aucun contenu de plugin ne change : les six plugins gardent leur version.

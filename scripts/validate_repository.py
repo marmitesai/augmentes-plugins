@@ -136,8 +136,8 @@ def validate() -> list[str]:
         fail(errors, "catalog.yaml : data_classification invalide")
     if distribution.get("secrets") != "forbidden":
         fail(errors, "catalog.yaml : secrets doit valoir forbidden")
-    if distribution.get("runtime_data") != "local-only":
-        fail(errors, "catalog.yaml : runtime_data doit valoir local-only")
+    if distribution.get("runtime_data") not in {"local-only", "garde-manger-first-local-fallback"}:
+        fail(errors, "catalog.yaml : politique runtime_data inconnue")
     plugins = catalog.get("plugins", [])
     plugin_names = [plugin.get("name") for plugin in plugins]
     if len(plugin_names) != len(set(plugin_names)):
@@ -167,6 +167,13 @@ def validate() -> list[str]:
                 fail(errors, f"{skill_file.relative_to(ROOT)} absent")
                 continue
             skill_files.append(skill_file)
+            if distribution.get("runtime_data") == "garde-manger-first-local-fallback":
+                source = ROOT / "references" / "storage-contract.md"
+                packaged = skill_file.parent / "references" / "storage-contract.md"
+                if not source.is_file() or not packaged.is_file() or packaged.read_bytes() != source.read_bytes():
+                    fail(errors, f"{skill_file.relative_to(ROOT)} : contrat de stockage absent ou périmé")
+                if "](references/storage-contract.md)" not in skill_file.read_text():
+                    fail(errors, f"{skill_file.relative_to(ROOT)} : contrat de stockage non référencé")
             data = frontmatter(skill_file, errors)
             if data.get("name") != skill_name:
                 fail(errors, f"{skill_file.relative_to(ROOT)} : name différent du dossier")

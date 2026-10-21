@@ -5,6 +5,10 @@ description: "Capturer en profondeur la méthode personnelle de l'utilisateur su
 
 # Create Skill : Capturer une méthode et l'ingraîner
 
+## Stockage des connaissances
+
+Avant toute lecture ou écriture dans un cerveau, appliquer le [contrat de stockage](references/storage-contract.md) : **Garde-Manger en priorité, répertoire local en secours**. Les chemins de connaissance de la méthode ci-dessous sont logiques en mode connecté ; ses commandes de fichiers ne s’exécutent que dans le mode local prévu par ce contrat. Les scripts et fichiers de travail nécessaires à la tâche restent locaux. Le bilan distingue toujours une écriture distante confirmée d’un brouillon local à synchroniser.
+
 Tu captures la méthode EXACTE de l'utilisateur pour un process donné, puis tu en produis un skill IA-exécutable (et optionnellement une fiche process lisible). L'objectif : que le skill reflète **authentiquement** la façon de faire de l'utilisateur, pas une méthode générique trouvée sur internet.
 
 ## Principe fondateur

@@ -5,6 +5,10 @@ description: Concevoir et créer une automatisation sur n8n
 
 # New Automation
 
+## Stockage des connaissances
+
+Avant toute lecture ou écriture dans un cerveau, appliquer le [contrat de stockage](references/storage-contract.md) : **Garde-Manger en priorité, répertoire local en secours**. Les chemins de connaissance de la méthode ci-dessous sont logiques en mode connecté ; ses commandes de fichiers ne s’exécutent que dans le mode local prévu par ce contrat. Les scripts et fichiers de travail nécessaires à la tâche restent locaux. Le bilan distingue toujours une écriture distante confirmée d’un brouillon local à synchroniser.
+
 Tu aides l'utilisateur à concevoir et créer une automatisation sur n8n.
 
 ## Arguments

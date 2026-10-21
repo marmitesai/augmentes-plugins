@@ -5,6 +5,10 @@ description: Use when the user says "/plaud", "ingère mes réunions", "fais les
 
 # /plaud
 
+## Stockage des connaissances
+
+Avant toute lecture ou écriture dans un cerveau, appliquer le [contrat de stockage](references/storage-contract.md) : **Garde-Manger en priorité, répertoire local en secours**. Les chemins de connaissance de la méthode ci-dessous sont logiques en mode connecté ; ses commandes de fichiers ne s’exécutent que dans le mode local prévu par ce contrat. Les scripts et fichiers de travail nécessaires à la tâche restent locaux. Le bilan distingue toujours une écriture distante confirmée d’un brouillon local à synchroniser.
+
 Un enregistrement de réunion est une matière brute qui ment. La transcription déforme les noms et les chiffres, et le moteur qui découpe les voix attribue des phrases à des gens qui n'étaient pas là.
 
 Cette recette part de cette matière et en tire une note propre dans le coffre, un compte-rendu et les mails qui en découlent. Entre les deux, il y a l'utilisateur.
@@ -30,10 +34,14 @@ Ces règles ne sont pas de la prudence de façade. Un compte-rendu envoyé sur l
 
 1. **Le connecteur Plaud doit être branché.** Le serveur MCP `plaud-toolkit` donne accès aux enregistrements du compte indiqué en `compte_plaud`. S'il ne répond pas, s'arrêter là et suivre `setup/SETUP.md`.
 2. **`config.json` doit exister** à la racine de la recette. S'il manque, copier `config.example.json` et le remplir avec l'utilisateur, champ par champ. Ne jamais deviner les emails de son équipe : ce sont eux qui préremplissent les locuteurs et les destinataires d'un compte-rendu.
-3. **Le coffre doit être identifié.** Si `coffre` est vide dans la config, demander où il se trouve.
+3. **La destination doit être identifiée.** Essayer d’abord le Garde-Manger connecté et son espace autorisé. Le champ `coffre` désigne le répertoire local de secours ; son absence ne bloque pas une lecture ou une écriture distante. Choisir séparément un dossier de travail pour les scripts.
 4. **La messagerie annoncée doit répondre.** Si `messagerie` vaut `m365` ou `gmail`, le connecteur correspondant doit être branché : le vérifier avant de lancer, pas au stage 6. Si elle vaut `aucune`, annoncer d'emblée que le pipeline s'arrête au compte-rendu fichier, sans brouillon.
 
 ## Où vont les fichiers
+
+En mode Garde-Manger, rechercher les enregistrements déjà traités par leur identifiant Plaud dans les notes distantes autorisées avant d’en importer de nouveaux. Après correction, enregistrer la note curée dans l’espace choisi, avec l’identifiant Plaud pour le dédoublonnage, et relire le reçu. Les bruts et pages HTML nécessaires aux scripts restent dans un dossier de travail privé choisi ; cela ne signifie pas que la note est publiée. Si leur conservation durable est demandée, utiliser l’ingestion de pièces jointes disponible ou signaler leur conservation locale. Ne pas écrire silencieusement une seconde note dans `coffre`.
+
+Les chemins ci-dessous concernent le mode local ; en mode distant, ils servent seulement à organiser les fichiers de travail.
 
 Si le coffre est un kit cerveau (un dossier `Cerveaux/` ou `0 INBOX/` à sa racine), le brut va dans `5 ARCHIVE/raw/plaud/` et les notes dans `0 INBOX/`, d'où elles se rangent ensuite.
 
@@ -49,7 +57,7 @@ Le brut ne se réécrit pas. C'est l'archive. La note curée est la version relu
 
 > Les dates de l'API sont en UTC. Les convertir en heure de Paris avant tout usage : nom de fichier, frontmatter, fenêtre agenda, compte-rendu. Une réunion de 9h notée 7h fait rater son créneau d'agenda.
 
-Puis écarter ce qui est déjà au coffre :
+En mode connecté, écarter ce qui est déjà enregistré dans le Garde-Manger par son identifiant Plaud. En mode local seulement, compléter la déduplication avec le script ci-dessous ; son résultat ne prouve jamais l’absence d’une note distante :
 
 ```bash
 scripts/check_ingested.sh "<coffre>" <id1> <id2> ...

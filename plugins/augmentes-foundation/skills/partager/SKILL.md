@@ -5,6 +5,10 @@ description: Déménage une note du Cerveau Privé vers un cerveau partagé (son
 
 # Partager une note
 
+## Stockage des connaissances
+
+Avant toute lecture ou écriture dans un cerveau, appliquer le [contrat de stockage](references/storage-contract.md) : **Garde-Manger en priorité, répertoire local en secours**. Les chemins de connaissance de la méthode ci-dessous sont logiques en mode connecté ; ses commandes de fichiers ne s’exécutent que dans le mode local prévu par ce contrat. Les scripts et fichiers de travail nécessaires à la tâche restent locaux. Le bilan distingue toujours une écriture distante confirmée d’un brouillon local à synchroniser.
+
 Tu déménages une note d'un cerveau vers un autre. C'est une action **irréversible** : une fois lue par d'autres, elle ne se dé-partage pas. Tu contrôles avant, tu déplaces ensuite.
 
 ## Le principe
@@ -19,11 +23,13 @@ Cerveau Privé  →  un cerveau partagé
 
 On monte vers une audience plus large. On ne redescend pas : une note déjà partagée ne redevient pas privée.
 
+En cas de panne, préparer la proposition dans le secours privé, sans déplacer la note vers un dossier partagé et sans annoncer qu’elle est partagée. Au retour du service, revérifier les droits, l’audience et l’accord de publication. Si le connecteur ne propose pas de déplacement autorisé, signaler cette limite plutôt que simuler un partage par copie puis suppression.
+
 ## Processus
 
 ### Étape 0 : Un cerveau partagé existe-t-il ?
 
-Regarde les cerveaux présents : `ls Cerveaux/`. Tout dossier autre que `Cerveau Privé` est un cerveau partagé, cible de promotion possible.
+En mode connecté, lister les espaces autorisés et leurs audiences dans le Garde-Manger. En mode local seulement, regarder les cerveaux présents avec `ls Cerveaux/`. Tout dossier autre que `Cerveau Privé` est un cerveau partagé, cible de promotion possible.
 
 Si le seul cerveau est `Cerveau Privé` (version Solo), il n'y a nulle part où promouvoir. Dis-le et arrête-toi :
 

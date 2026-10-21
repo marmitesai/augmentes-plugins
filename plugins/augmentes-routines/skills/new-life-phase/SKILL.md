@@ -5,6 +5,10 @@ description: Clôturer la phase actuelle et en ouvrir une nouvelle
 
 # Nouvelle Phase de Vie
 
+## Stockage des connaissances
+
+Avant toute lecture ou écriture dans un cerveau, appliquer le [contrat de stockage](references/storage-contract.md) : **Garde-Manger en priorité, répertoire local en secours**. Les chemins de connaissance de la méthode ci-dessous sont logiques en mode connecté ; ses commandes de fichiers ne s’exécutent que dans le mode local prévu par ce contrat. Les scripts et fichiers de travail nécessaires à la tâche restent locaux. Le bilan distingue toujours une écriture distante confirmée d’un brouillon local à synchroniser.
+
 Transition vers une nouvelle phase de vie avec bilan de la précédente.
 
 ## Argument
