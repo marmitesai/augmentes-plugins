@@ -5,6 +5,12 @@ description: "Import intelligent par passes intentionnelles : alignement profond
 
 # Import Intelligent
 
+## Stockage des connaissances
+
+Avant toute lecture ou écriture dans un cerveau, appliquer le [contrat de stockage](references/storage-contract.md) : **Garde-Manger en priorité, répertoire local en secours**. Les chemins de connaissance de la méthode ci-dessous sont logiques en mode connecté ; ses commandes de fichiers ne s’exécutent que dans le mode local prévu par ce contrat. Les scripts et fichiers de travail nécessaires à la tâche restent locaux. Le bilan distingue toujours une écriture distante confirmée d’un brouillon local à synchroniser.
+
+Pour un import, les fichiers sources de `_Import/` restent des entrées locales à parcourir et convertir. En mode connecté, le contexte existant se lit dans le Garde-Manger et les notes résultantes s’y écrivent par le connecteur ; ne pas confondre ce dossier d’entrée avec le répertoire de secours. N’archiver ni ne déplacer les sources comme « traitées » avant confirmation de leur ingestion, ou avant de les avoir conservées avec les contributions en attente.
+
 ## Le principe : importer par petites passes intentionnelles
 
 Avant toute chose, rappelle cette règle à l'utilisateur dès le début :

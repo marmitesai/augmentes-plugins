@@ -5,6 +5,10 @@ description: Initialiser le vault Perspectives IA via conversation guidée. Péd
 
 # Initialisation du Vault Perspectives IA
 
+## Stockage des connaissances
+
+Avant toute lecture ou écriture dans un cerveau, appliquer le [contrat de stockage](references/storage-contract.md) : **Garde-Manger en priorité, répertoire local en secours**. Les chemins de connaissance de la méthode ci-dessous sont logiques en mode connecté ; ses commandes de fichiers ne s’exécutent que dans le mode local prévu par ce contrat. Les scripts et fichiers de travail nécessaires à la tâche restent locaux. Le bilan distingue toujours une écriture distante confirmée d’un brouillon local à synchroniser.
+
 Tu initialises ce vault avec les informations de l'utilisateur via une conversation guidée. En même temps, tu **expliques** ce qu'on met en place et pourquoi : l'utilisateur comprend ce qu'il fait, pas seulement ce qu'il remplit.
 
 ## Règle transversale : dépôt de documents
@@ -35,7 +39,7 @@ Chaque étape de décharge se clôt sur une sous-étape « Écrire ». Annonce-l
 
 ## Étape 1 : Prélude pédagogique (explique le système)
 
-Regarde d'abord combien de cerveaux sont présents : `ls Cerveaux/`. Un (version Solo), deux (Privé plus un partagé) ou trois. Adapte le passage sur les cerveaux au nombre réel : ne présente que ceux qui sont là, et en Solo présente le Cerveau Privé comme le seul, sans parler de promotion vers d'autres. Dis à l'utilisateur (adapte le ton, ne le récite pas mot pour mot, formule en conversant) :
+En mode connecté, compter les espaces autorisés renvoyés par le Garde-Manger. En mode local seulement : `ls Cerveaux/`. Un (version Solo), deux (Privé plus un partagé) ou trois. Adapte le passage sur les cerveaux au nombre réel : ne présente que ceux qui sont là, et en Solo présente le Cerveau Privé comme le seul, sans parler de promotion vers d'autres. Dis à l'utilisateur (adapte le ton, ne le récite pas mot pour mot, formule en conversant) :
 
 ```
 Bienvenue. On va initialiser ton second cerveau.
@@ -186,7 +190,9 @@ Dis à l'utilisateur : « J'ai enregistré ton prénom, ta boîte et le nom de l
 
 ## Étape 2 bis : Nommer et brancher les cerveaux partagés
 
-Regarde d'abord les cerveaux présents : `ls Cerveaux/`. À part `Cerveau Privé`, chaque dossier est un cerveau partagé. Il y en a zéro, un ou deux selon la version installée.
+**Mode Garde-Manger :** les espaces et leurs droits existent côté serveur. Cette étape recueille les noms et audiences souhaités ; elle ne crée, ne renomme ni ne supprime un espace, et ne change aucune permission. Les notes sont écrites via le connecteur dans les espaces autorisés. Les commandes `mv`, `sed` et les liens symboliques ci-dessous concernent uniquement un coffre local autonome, jamais un export ni le secours d’une instance distante. Les préférences Obsidian sont facultatives et locales ; leur absence ne bloque pas l’initialisation distante.
+
+Lister d’abord les espaces autorisés du Garde-Manger ; en mode local seulement, utiliser `ls Cerveaux/`. À part `Cerveau Privé`, chaque dossier est un cerveau partagé. Il y en a zéro, un ou deux selon la version installée.
 
 **Aucun cerveau partagé (version Solo)** : un seul cerveau, le Privé. Dis-le en un mot (« Ce kit est en version Solo, un seul cerveau. On passe. ») et enchaîne sur l'Étape 3. Un cerveau partagé pourra s'ajouter plus tard.
 

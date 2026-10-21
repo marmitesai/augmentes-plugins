@@ -1,6 +1,12 @@
 # Plugins AUGMENTÉS
 
-Plugins Claude Code et Codex fournis aux clients AUGMENTÉS. Les skills travaillent sur les fichiers locaux de l'utilisateur et n'embarquent aucun identifiant d'accès.
+Plugins Claude Code et Codex fournis aux clients AUGMENTÉS. Les skills utilisent d’abord le Garde-Manger connecté de l’utilisateur, puis un répertoire local en secours. Ils n’embarquent aucun identifiant d’accès.
+
+## Stockage et reprise
+
+Le [contrat commun de stockage](references/storage-contract.md) s’applique aux 18 skills. Le connecteur et le répertoire de secours appartiennent à l’utilisateur ; aucun domaine ni client n’est imposé. Une panne permet de conserver le travail localement, avec un état à synchroniser. Un refus d’accès ne se contourne pas par une copie locale. Une écriture distante n’est annoncée qu’après confirmation et relecture.
+
+Le contrat est généré dans chaque skill pour rester disponible lors d’une installation individuelle ou d’un export ZIP. Modifier sa source, puis lancer `python3 scripts/generate_catalog.py` ; `--check` détecte les copies périmées. Les scripts de travail (Plaud, tri des mails, rapports) restent locaux sans devenir une source de vérité parallèle.
 
 ## Plugins
 

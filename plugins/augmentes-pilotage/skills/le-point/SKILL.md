@@ -5,6 +5,10 @@ description: Use when the user says "/le-point", "fais le point", "fais le point
 
 # /le-point
 
+## Stockage des connaissances
+
+Avant toute lecture ou écriture dans un cerveau, appliquer le [contrat de stockage](references/storage-contract.md) : **Garde-Manger en priorité, répertoire local en secours**. Les chemins de connaissance de la méthode ci-dessous sont logiques en mode connecté ; ses commandes de fichiers ne s’exécutent que dans le mode local prévu par ce contrat. Les scripts et fichiers de travail nécessaires à la tâche restent locaux. Le bilan distingue toujours une écriture distante confirmée d’un brouillon local à synchroniser.
+
 Une boîte mail, ce sont deux choses mélangées : des faits qui méritent d'être gardés, et des décisions qui attendent. `/le-point` sépare les deux.
 
 Ce qui mérite mémoire part dans le coffre. Ce qui demande un arbitrage revient dans un rapport où l'on tranche d'un clic.
@@ -19,7 +23,7 @@ Cette règle n'est pas théorique. Sur la première fenêtre traitée avec cette
 
 1. **Le connecteur mail doit être branché.** Microsoft 365 ou Gmail, dans les connecteurs. Sans lui, il n'y a rien à lire.
 2. **`config.json` doit exister** à la racine de la recette. S'il manque, copier `config.example.json` et le remplir avec l'utilisateur, champ par champ. Ne jamais inventer ses domaines proches à sa place : lui demander qui compte, ce sont ses clients et ses conseils.
-3. **Le coffre doit être identifié.** Si `coffre` est vide dans la config, demander où il se trouve.
+3. **La destination doit être identifiée.** Essayer d’abord le Garde-Manger connecté et son espace autorisé. Le champ `coffre` désigne le répertoire local de secours ; son absence ne bloque pas une lecture ou une écriture distante. Choisir séparément un dossier de travail pour les scripts.
 
 ## Procédure
 
@@ -86,6 +90,8 @@ Poser les questions structurantes **avant** d'écrire, avec des options cliquabl
 Ce qui se demande : créer un projet, rattacher un fait sensible à un dossier plutôt qu'un autre, déclencher un travail lourd. Ce qui ne se demande pas : où ranger un fait évident. La structure du coffre suffit.
 
 ### 7. Ranger dans le coffre
+
+En mode connecté, écrire les faits durables dans les notes du Garde-Manger identifiées à l’étape 5, avec leur révision courante. Les fichiers JSON de tri et le rapport HTML sont des artefacts de travail, pas une preuve de publication. Si une modification distante échoue, conserver seulement la contribution non confirmée dans la file de secours du contrat ; ne pas recopier les faits déjà enregistrés. En mode local autonome, modifier les notes du coffre choisi.
 
 Les faits durables vont dans la note du projet ou du domaine concerné. **Modification ciblée, jamais de réécriture** d'une note existante. Mettre à jour la date de mise à jour.
 

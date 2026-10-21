@@ -116,6 +116,10 @@ def expected_files(catalog: dict) -> dict[Path, str]:
     files = marketplace_manifests(catalog)
     for plugin in catalog["plugins"]:
         files.update(plugin_manifests(catalog, plugin))
+        contract = (ROOT / "references" / "storage-contract.md").read_text()
+        for skill in plugin["skills"]:
+            target = ROOT / "plugins" / plugin["name"] / "skills" / skill / "references" / "storage-contract.md"
+            files[target] = contract
     return files
 
 

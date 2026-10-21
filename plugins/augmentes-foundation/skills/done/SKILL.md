@@ -5,11 +5,15 @@ description: "Fin de session : extraction, log dans la daily note du Cerveau Pri
 
 # Fin de Session
 
+## Stockage des connaissances
+
+Avant toute lecture ou écriture dans un cerveau, appliquer le [contrat de stockage](references/storage-contract.md) : **Garde-Manger en priorité, répertoire local en secours**. Les chemins de connaissance de la méthode ci-dessous sont logiques en mode connecté ; ses commandes de fichiers ne s’exécutent que dans le mode local prévu par ce contrat. Les scripts et fichiers de travail nécessaires à la tâche restent locaux. Le bilan distingue toujours une écriture distante confirmée d’un brouillon local à synchroniser.
+
 Clôture la session en extrayant les informations importantes et en mettant à jour les cerveaux selon le flux de ruissellement.
 
 ## Le cadre multi-cerveaux
 
-Une session a pu écrire dans plusieurs cerveaux (les dossiers présents sous `Cerveaux/`). La clôture doit tous les couvrir. Trois règles qui ne bougent pas :
+Une session a pu écrire dans plusieurs cerveaux : les espaces autorisés du Garde-Manger, ou les dossiers du coffre en mode local. La clôture doit tous les couvrir. Trois règles qui ne bougent pas :
 
 **Le log de session va toujours dans le Cerveau Privé.** La daily note vit dans la phase de vie active, dans `Cerveau Privé/2 CASQUETTES/Sur ma vie/Life Phases/`. Quel que soit le cerveau où on a travaillé. Le journal est privé, point.
 
@@ -41,6 +45,8 @@ Identifie aussi :
 ### Étape 2 : Détecter la phase active
 
 La phase de vie est une notion du Cerveau Privé, elle n'existe nulle part ailleurs.
+
+En mode connecté, rechercher les notes de phase et lire l’intention active dans l’espace privé autorisé. Ne pas déduire la phase courante d’un ancien export local. Si plusieurs phases semblent actives, faire préciser laquelle. En mode local seulement :
 
 ```bash
 ls -d "Cerveaux/Cerveau Privé/2 CASQUETTES/Sur ma vie/Life Phases/"*/ | sort -V | tail -1
@@ -88,6 +94,8 @@ Marque toujours les fichiers d'un cerveau partagé. Dans six mois, la trace de c
 Pour chaque extraction de type Décision, Fait, ou Contradiction qui concerne un projet ou une casquette :
 
 1. **Trouve la note de contexte, dans tous les cerveaux présents.** Un projet peut vivre ailleurs qu'en Privé.
+
+En mode connecté, rechercher les projets et casquettes dans les seuls espaces autorisés, puis lire leurs notes par identifiant. En mode local seulement :
 
 ```bash
 find Cerveaux -maxdepth 3 -type d \( -path "*/1 PROJETS/*" -o -path "*/2 CASQUETTES/*" \)
@@ -211,6 +219,8 @@ Lance `/partager` si tu veux les faire monter. Je ne déplace rien tout seul.
 Tu **proposes**. Tu ne déplaces jamais une note ici. Le déménagement passe par `/partager`, qui fait le contrôle de confidentialité et le contrôle des wikilinks.
 
 ### Étape 9 : Confirmation
+
+Le modèle ci-dessous concerne les écritures relues et confirmées. En mode secours, remplacer « Session loggée » et « mise à jour » par « Clôture conservée localement » et lister les chemins à synchroniser. Si le journal a réussi mais qu’un contexte a échoué, ne pas remettre le journal réussi dans la file. Ne jamais promettre une reprise automatique ultérieure.
 
 ```
 Session loggée !

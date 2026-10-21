@@ -1,6 +1,6 @@
 # Confidentialité
 
-Les plugins AUGMENTÉS sont des instructions et scripts exécutés dans l'environnement local de l'utilisateur. Ils ne transmettent pas de données à Marmites SAS par eux-mêmes.
+Les plugins AUGMENTÉS sont des instructions et scripts exécutés dans l’environnement de l’utilisateur. Les connaissances sont lues et écrites dans son Garde-Manger connecté en priorité, sous ses droits et pour la tâche demandée. Les fichiers de travail et les contributions de secours restent dans un répertoire privé choisi par l’utilisateur. Aucun envoi vers une instance Marmites ou un autre client n’est implicite.
 
 Certains skills peuvent demander l'usage de services externes, par exemple une messagerie, un agenda, Plaud, un serveur MCP ou une automatisation n8n. L'utilisateur choisit et configure ces services. Le traitement des données dépend alors des conditions du service concerné et de la configuration locale.
 

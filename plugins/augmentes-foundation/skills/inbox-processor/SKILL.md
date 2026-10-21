@@ -5,6 +5,10 @@ description: Traiter les items de l'inbox et les router vers le bon cerveau
 
 # Inbox Processor
 
+## Stockage des connaissances
+
+Avant toute lecture ou écriture dans un cerveau, appliquer le [contrat de stockage](references/storage-contract.md) : **Garde-Manger en priorité, répertoire local en secours**. Les chemins de connaissance de la méthode ci-dessous sont logiques en mode connecté ; ses commandes de fichiers ne s’exécutent que dans le mode local prévu par ce contrat. Les scripts et fichiers de travail nécessaires à la tâche restent locaux. Le bilan distingue toujours une écriture distante confirmée d’un brouillon local à synchroniser.
+
 Tu aides l'utilisateur à vider son inbox. Chaque item reçoit deux décisions : **quel dossier** (IPCRA) et **quel cerveau** (audience).
 
 ## Contexte
